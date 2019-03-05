@@ -10,7 +10,7 @@ spring:
     cache: false
 #公共配置与profiles选择无关 mapperLocations指的路径是src/main/resources
 mybatis:
-  typeAliasesPackage: com.hxf.mall.entity
+  typeAliasesPackage: com.hxf.mall.bean
   mapperLocations: classpath:mapper/*.xml
 
 ---
@@ -20,9 +20,14 @@ spring:
   profiles: dev
 
   datasource:
-    url: jdbc:mysql://localhost:3306/tmall_springboot?characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/xmall?characterEncoding=UTF-8
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
+
+  servlet:
+    multipart:
+      maxFileSize: 1MB #单个文件大小
+      maxRequestSize: 10MB  #总上传文件大小

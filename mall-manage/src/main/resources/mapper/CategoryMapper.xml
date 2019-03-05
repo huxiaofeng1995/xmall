@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxf.mall.mapper.CategoryMapper">
+    <select id="list_class1"  resultType="T_MALL_CLASS_1">
+        select * from t_mall_class_1
+    </select>
+
+    <select id="list_class2"  resultType="T_MALL_CLASS_2">
+        select * from t_mall_class_2 where flbh1 = #{flbh1}
+    </select>
+    <select id="list_tm"  resultType="T_MALL_TRADE_MARK">
+        select tm.id id,tm.* from t_mall_trade_mark tm left join t_mall_tm_class tc on tm.id=tc.pp_id where tc.flbh1 = #{flbh1}
+    </select>
+
+</mapper>

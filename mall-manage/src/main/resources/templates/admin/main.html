@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>信息管理系统界面</title>
+<script src="js/jquery/2.0.0/jquery.min.js"></script>
+<script src="js/vue/2.5.16/vue.min.js"></script>
+<script src="js/axios/0.17.1/axios.min.js"></script>
+</head>
+<body>
+<script>
+    $(function(){
+        var data4Vue = {
+        };
+
+        //ViewModel
+        var vue = new Vue({
+            el: '#app',
+            data: data4Vue,
+            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                //this.list(1);
+            }
+        });
+    });
+</script>
+<div id="app">
+    后台管理首页
+ 	<hr>
+ 	<a href="goto_spu" target="_blank">商品信息管理</a><br>
+ 	商品属性管理<br>
+ 	商品库存单元管理<br>
+ 	商品缓存管理<br>
+</div>
+</body>
+</html>
