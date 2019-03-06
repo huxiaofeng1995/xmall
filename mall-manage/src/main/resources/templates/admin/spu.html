@@ -1,12 +1,6 @@
 ﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>信息管理系统界面</title>
-<script language="JavaScript" src="js/jquery/2.0.0/jquery.min.js"></script>
-<script src="js/vue/vue.js"></script>
-<script src="js/axios/0.17.1/axios.min.js"></script>
-</head>
+<head th:include="include/admin/adminHeader::html('小红商城')" ></head>
 <body>
 <script>
     $(function(){
@@ -30,7 +24,9 @@
             },
             methods: {
                 add:function() {
-                    location.href = '/goto_spu_add?flbh1=' + this.flbh1 + '&flbh2=' + this.flbh2 + '&pp_id=' + this.pp_id;
+                    if(checkEmpty(this.flbh1,'一级分类')&&checkEmpty(this.flbh2,'二级分类')&&checkEmpty(this.pp_id,'品牌')){
+                        location.href = '/goto_spu_add?flbh1=' + this.flbh1 + '&flbh2=' + this.flbh2 + '&pp_id=' + this.pp_id;
+                    }
                 },
                 listcategory1:function() {
                     var url = 'listcategory1';
@@ -61,10 +57,10 @@
     	一级：<select id="class_1_select" v-model="flbh1" @change="listchildcategory(flbh1)" >     <!--将选中的值建立模型，就能取到值了  -->
     	        <option v-for="(c,index) in category1" :key="index" :value="c.id">{{c.flmch1}}</option>
     	      </select>
-    	二级：<select  id="class_2_select" >
+    	二级：<select  id="class_2_select" v-model="flbh2">
     	        <option v-for="(ca,index) in category2" :key="index" :value="ca.id" >{{ca.flmch2}}</option>
                </select>
-    	品牌：<select  id="tm_select">
+    	品牌：<select  id="tm_select" v-model="pp_id">
                 <option v-for="(t,index) in tm" :key="index" :value="t.id" >{{t.ppmch}}</option>
                 </select><br>
     	查询<br>

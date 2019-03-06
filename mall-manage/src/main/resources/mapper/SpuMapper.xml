@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxf.mall.mapper.SpuMapper">
+    <insert id="insert_spu" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="T_MALL_PRODUCT">
+        insert into t_mall_product
+        (shp_mch,shp_tp,flbh1,flbh2,pp_id,shp_msh)
+        values
+        (#{shp_mch},#{shp_tp},#{flbh1},#{flbh2},#{pp_id},#{shp_msh})
+    </insert>
+
+    <insert id="insert_spu_image" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="T_MALL_PRODUCT_IMAGE">
+        insert into t_mall_product_image
+        (shp_id,url)
+        values
+        (#{shp_id},#{url})
+    </insert>
+
+</mapper>
