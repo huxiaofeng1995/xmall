@@ -18,4 +18,13 @@
         (#{shp_id},#{url})
     </insert>
 
+    <insert id="insert_imgs"  parameterType="Map">
+        insert into t_mall_product_image
+        (SHP_ID,URL)
+        values
+        <foreach item="img" collection="imgs" separator=",">
+            (#{shp_id},#{img})
+        </foreach>
+    </insert>
+
 </mapper>
