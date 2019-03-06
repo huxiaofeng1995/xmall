@@ -9,7 +9,8 @@
             flbh1: '',
             flbh2: '',
             pp_id: '',
-            files: []
+            files: [],
+            fileItems:[{index: 0,src: 'image/upload_hover.png'}]
         };
 
         //ViewModel
@@ -23,8 +24,9 @@
                 console.log(this.bean);
             },
             methods:{
-                getFile: function (event) {
-                    this.files.push (event.target.files[0]);//多文件上传
+                getFile: function (event,index) {
+                    //this.files.push (event.target.files[0]);//多文件上传
+                    this.files[index] = event.target.files[0] ;
                 },
                 add: function() {
                     var url = "spu";
@@ -38,6 +40,40 @@
                         alert("添加成功");
                         location.reload();
                     });
+                },
+                upimg: function(index) {
+                    console.log(vue.$refs);
+                    //触发该img标签匹配的file input标签的点击事件，来上传文件
+                    vue.$refs.imgFile[index].click();
+                },
+                upFile: function(event,index) {
+                    //使用img标签预览上传的图片
+                    //获得图片对象
+                    var blob_img = event.target.files[0] ;
+                    if(window.URL.createObjectURL) {
+                        var url = window.URL.createObjectURL(blob_img);
+                        //替换img,显示选中上传的图片
+                        vue.fileItems[index].src = url;
+                        //图片上传成功后，生成下一个空白的图片标签
+                        this.addimg(index);
+                    }else {
+                        var fr = new FileReader();
+                        fr.onload = function () {
+                            vue.fileItems[index].src = this.result;
+                        }
+                        fr.readAsDataURL(blob_img);
+                        this.addimg(index);
+                    }
+                    //将图片存入请求参数中
+                    this.files[index] = blob_img;
+                },
+                addimg: function(index){
+                    var length = vue.$refs.imgFile.length;//获取当前文件input/img 标签的数量
+                    if((index+1) == length && index < 4){//说明用户点击的是最后一张,并限制图片个数,这里限制了5张图片
+                        index++;
+                        var obj= {index: index,src:'image/upload_hover.png'};
+                        this.fileItems.push(obj)
+                    }
                 }
             }
         });
@@ -49,10 +85,10 @@
         商品名称：<input name="shp_mch" type="text" v-model="bean.shp_mch"/><br>
         商品描述：<textarea name="shp_msh" rows="10" cols="50" v-model="bean.shp_msh"></textarea><br>
         商品图片：<br>
-        <input type="file" name="files" @change="getFile($event)"/><br><!--这种上传方式暂时存在问题，点同一个上传文件按钮，会上传多余的文件 -->
-        <input type="file" name="files" @change="getFile($event)"/><br>
-        <input type="file" name="files" @change="getFile($event)"/><br>
-
+        <div id = "dimg" v-for="item in fileItems" style="float:left">
+        	<input ref="imgFile" type="file" name="files" style="display: none" @change="upFile($event,item.index)"/>
+        	<img :id="'img_'+item.index" style="cursor: pointer;margin-left: 5px" :src="item.src" width="100px" height='100px' @click="upimg(item.index)"/></div>
+        <div style="clear:both"></div>
         <input type="submit" value="提交" @click="add"/>
 </div>
 </body>
