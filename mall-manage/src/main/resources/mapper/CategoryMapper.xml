@@ -15,4 +15,15 @@
         select tm.id id,tm.* from t_mall_trade_mark tm left join t_mall_tm_class tc on tm.id=tc.pp_id where tc.flbh1 = #{flbh1}
     </select>
 
+    <insert id="insert_class1" parameterType="T_MALL_CLASS_1">
+        insert into t_mall_class_1 (flmch1) VALUES (#{flmch1})
+    </insert>
+
+    <update id="update_class1" parameterType="T_MALL_CLASS_1">
+        update t_mall_class_1 set flmch1=#{flmch1} where id=#{id}
+    </update>
+
+    <delete id="delete_class1" >
+        delete from t_mall_class_1 where id=#{id}
+    </delete>
 </mapper>

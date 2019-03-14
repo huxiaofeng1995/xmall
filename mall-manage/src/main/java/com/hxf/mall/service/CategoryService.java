@@ -26,4 +26,16 @@ public class CategoryService {
     public List<T_MALL_TRADE_MARK> gettmList(int flbh1) {
         return categoryMapper.list_tm(flbh1);
     }
+
+    public void add_first_cate(T_MALL_CLASS_1 class1) {
+        categoryMapper.insert_class1(class1);
+    }
+
+    public void update_first_cate(T_MALL_CLASS_1 class1) {
+        categoryMapper.update_class1(class1);
+    }
+
+    public void delete_first_cate(int id) {
+        categoryMapper.delete_class1(id);
+    }
 }

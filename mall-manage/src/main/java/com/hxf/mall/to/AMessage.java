@@ -8,6 +8,10 @@ public class AMessage {
 
     private String message;
 
+    public AMessage() {
+        this.code = 200;
+    }
+
     public int getCode() {
         return code;
     }

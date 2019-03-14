@@ -23,7 +23,6 @@ public class UserController {
 
 
         AMessage aMessage = new AMessage();
-        aMessage.setCode(200);
         Map<String,Object> data = new HashMap<>();
         data.put("tokenHead","test");
         data.put("token",System.currentTimeMillis());
