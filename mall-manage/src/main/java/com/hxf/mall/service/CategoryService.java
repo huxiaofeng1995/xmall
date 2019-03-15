@@ -74,4 +74,8 @@ public class CategoryService {
     public List<T_MALL_TRADE_MARK> gettmList(){
         return categoryMapper.list_trademark();
     }
+
+    public void delete_tm_class2(Map<String, Object> map) {
+        categoryMapper.delete_tm_class2(map);
+    }
 }

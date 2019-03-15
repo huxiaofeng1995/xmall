@@ -162,4 +162,26 @@ public class CategoryController {
         aMessage.setData("success");
         return aMessage;
     }
+
+    @PostMapping("/category/tmclass")
+    public AMessage add_tm_class(int pp_id, int flbh1){
+        Map<String,Object> map = new HashMap<>();
+        map.put("pp_id", pp_id);
+        map.put("flbh1", flbh1);
+        categoryService.add_tm_class(map);
+        AMessage aMessage = new AMessage();
+        aMessage.setData("success");
+        return aMessage;
+    }
+
+    @DeleteMapping("category/tmclass/{id}/flbh1/{flbh1}")
+    public AMessage delete_tm_class(@PathVariable int id, @PathVariable int flbh1){
+        Map<String,Object> map = new HashMap<>();
+        map.put("pp_id", id);
+        map.put("flbh1", flbh1);
+        categoryService.delete_tm_class2(map);
+        AMessage aMessage = new AMessage();
+        aMessage.setData("success");
+        return aMessage;
+    }
 }

@@ -37,4 +37,6 @@ public interface CategoryMapper {
     void delete_tm_class(int pp_id);
 
     List<T_MALL_TRADE_MARK> list_trademark();
+
+    void delete_tm_class2(Map<String, Object> map);
 }

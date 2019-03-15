@@ -59,6 +59,10 @@
         delete from t_mall_tm_class where pp_id=#{pp_id}
     </delete>
 
+    <delete id="delete_tm_class2">
+        delete from t_mall_tm_class where pp_id=#{pp_id} and flbh1=#{flbh1}
+    </delete>
+
     <select id="list_trademark" resultType="T_MALL_TRADE_MARK">
         select * from t_mall_trade_mark
     </select>
