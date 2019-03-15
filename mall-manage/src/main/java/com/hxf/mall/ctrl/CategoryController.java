@@ -65,12 +65,43 @@ public class CategoryController {
     }
 
     @GetMapping("category/second/{flbh1}")
-    public List<T_MALL_CLASS_2> list_second_cate(@PathVariable int flbh1){
-        return categoryService.getfl2List(flbh1);
+    public AMessage list_second_cate(@PathVariable int flbh1){
+        AMessage aMessage = new AMessage();
+        aMessage.setData(categoryService.getfl2List(flbh1));
+        return aMessage;
+    }
+
+    @PostMapping("category/second")
+    public AMessage add_second_cate(T_MALL_CLASS_2 class2){
+        categoryService.add_second_cate(class2);
+        AMessage aMessage = new AMessage();
+        aMessage.setData("success");
+        return aMessage;
+    }
+
+    @PutMapping("category/second")
+    public AMessage update_second_cate(@RequestBody String info){
+        T_MALL_CLASS_2 class2 = JSON.parseObject(info, T_MALL_CLASS_2.class);
+        categoryService.update_second_cate(class2);
+        AMessage aMessage = new AMessage();
+        aMessage.setData("success");
+        return aMessage;
+    }
+
+    @DeleteMapping("category/second/{id}")
+    public AMessage delete_second_cate(@PathVariable int id){
+        categoryService.delete_second_cate(id);
+        AMessage aMessage = new AMessage();
+        aMessage.setData("success");
+        return aMessage;
     }
 
     @GetMapping("category/trademark/{flbh1}")
-    public List<T_MALL_TRADE_MARK> listtrademark(@PathVariable int flbh1){
-        return categoryService.gettmList(flbh1);
+    public AMessage listtrademark(@PathVariable int flbh1){
+        AMessage aMessage = new AMessage();
+        aMessage.setData(categoryService.gettmList(flbh1));
+        return aMessage;
     }
+
+
 }

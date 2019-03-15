@@ -18,4 +18,10 @@ public interface CategoryMapper {
     void update_class1(T_MALL_CLASS_1 class1);
 
     void delete_class1(int id);
+
+    void insert_class2(T_MALL_CLASS_2 class2);
+
+    void update_class2(T_MALL_CLASS_2 class2);
+
+    void delete_class2(int id);
 }

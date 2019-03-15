@@ -38,4 +38,15 @@ public class CategoryService {
     public void delete_first_cate(int id) {
         categoryMapper.delete_class1(id);
     }
+
+    public void add_second_cate(T_MALL_CLASS_2 class2) {
+        categoryMapper.insert_class2(class2);
+    }
+
+    public void update_second_cate(T_MALL_CLASS_2 class2) {
+        categoryMapper.update_class2(class2);
+    }
+    public void delete_second_cate(int id) {
+        categoryMapper.delete_class2(id);
+    }
 }

@@ -26,4 +26,16 @@
     <delete id="delete_class1" >
         delete from t_mall_class_1 where id=#{id}
     </delete>
+
+    <insert id="insert_class2" parameterType="T_MALL_CLASS_2">
+        insert into t_mall_class_2 (flmch2,flbh1) VALUES (#{flmch2},#{flbh1})
+    </insert>
+
+    <update id="update_class2" parameterType="T_MALL_CLASS_1">
+        update t_mall_class_2 set flmch2=#{flmch2} where id=#{id}
+    </update>
+
+    <delete id="delete_class2" >
+        delete from t_mall_class_2 where id=#{id}
+    </delete>
 </mapper>
