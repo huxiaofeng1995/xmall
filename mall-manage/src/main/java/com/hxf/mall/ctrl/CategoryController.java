@@ -6,16 +6,35 @@ import com.hxf.mall.bean.T_MALL_CLASS_2;
 import com.hxf.mall.bean.T_MALL_TRADE_MARK;
 import com.hxf.mall.service.CategoryService;
 import com.hxf.mall.to.AMessage;
+import com.hxf.mall.util.QiniuUtil;
+import com.hxf.mall.util.UploadFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    //引入第一步的七牛配置
+    @Value("${qiniu.access.key}")
+    private String accesskey;
+
+    @Value("${qiniu.secret.key}")
+    private String secretKey;
+
+    @Value("${qiniu.bucket.name}")
+    private String bucketName;
+
+    @Value("${qiniu.bucket.host.name}")
+    private String bucketHostName;
 
     @GetMapping("listcategory1")
     public List<T_MALL_CLASS_1> list_cate1(){
@@ -96,12 +115,29 @@ public class CategoryController {
         return aMessage;
     }
 
-    @GetMapping("category/trademark/{flbh1}")
+    @GetMapping("category/tm/{flbh1}")
     public AMessage listtrademark(@PathVariable int flbh1){
         AMessage aMessage = new AMessage();
         aMessage.setData(categoryService.gettmList(flbh1));
         return aMessage;
     }
 
+    @PostMapping("category/tm")
+    public AMessage add_tm(int flbh1,T_MALL_TRADE_MARK tm, MultipartFile file){
+        QiniuUtil qiniuUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
+                this.bucketHostName, this.bucketName);
+        categoryService.add_tm(tm);
+        Map<String,Object> map = new HashMap<>();
+        map.put("pp_id", tm.getId());
+        map.put("flbh1",flbh1);
+        categoryService.add_tm_class(map);
+        String fileName = String.valueOf(tm.getId())+ "-" + flbh1;
+        String imgUrl = qiniuUtil.uploadFile(file, fileName,"trademark/");
+        tm.setUrl(imgUrl);
+        categoryService.update_tm(tm);
+        AMessage aMessage = new AMessage();
+        aMessage.setData("success");
+        return aMessage;
+    }
 
 }

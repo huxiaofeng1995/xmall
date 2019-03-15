@@ -5,6 +5,7 @@ import com.hxf.mall.bean.T_MALL_CLASS_2;
 import com.hxf.mall.bean.T_MALL_TRADE_MARK;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CategoryMapper {
     List<T_MALL_CLASS_1> list_class1();
@@ -24,4 +25,10 @@ public interface CategoryMapper {
     void update_class2(T_MALL_CLASS_2 class2);
 
     void delete_class2(int id);
+
+    void insert_tm(T_MALL_TRADE_MARK tm);
+
+    void insert_tm_class(Map<String, Object> map);
+
+    void update_tm(T_MALL_TRADE_MARK tm);
 }

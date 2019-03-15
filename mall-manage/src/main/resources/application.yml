@@ -37,3 +37,13 @@ spring:
     static-locations:
       - classpath:static/
       - file:static/
+
+qiniu:
+  access:
+    key: LEkt-mgrsIoHcSqJbGm3fEIuWOPv1_BKlXXoobGw
+  secret:
+    key: T2nwr0E9ZJPJ5TH-k-j8WL3SGGT1oWXntTiLihK1
+  bucket:
+    name: mymall
+    host:
+      name: http://poe12lctf.bkt.clouddn.com

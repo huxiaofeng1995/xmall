@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategoryService {
@@ -48,5 +49,17 @@ public class CategoryService {
     }
     public void delete_second_cate(int id) {
         categoryMapper.delete_class2(id);
+    }
+
+    public void add_tm(T_MALL_TRADE_MARK tm) {
+        categoryMapper.insert_tm(tm);
+    }
+
+    public void add_tm_class(Map<String, Object> map) {
+        categoryMapper.insert_tm_class(map);
+    }
+
+    public void update_tm(T_MALL_TRADE_MARK tm) {
+        categoryMapper.update_tm(tm);
     }
 }

@@ -38,4 +38,17 @@
     <delete id="delete_class2" >
         delete from t_mall_class_2 where id=#{id}
     </delete>
+
+    <insert id="insert_tm" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into t_mall_trade_mark (ppmch) values(#{ppmch})
+    </insert>
+
+    <insert id="insert_tm_class" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into t_mall_tm_class (pp_id,flbh1) values(#{pp_id},#{flbh1})
+    </insert>
+
+    <update id="update_tm">
+        update t_mall_trade_mark set ppmch=#{ppmch},url=#{url} where id=#{id}
+    </update>
+
 </mapper>
