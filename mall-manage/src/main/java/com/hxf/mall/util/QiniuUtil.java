@@ -3,6 +3,7 @@ package com.hxf.mall.util
 
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
@@ -28,6 +29,8 @@ public class QiniuUtil {
 
     private UploadManager uploadManager = new UploadManager();
 
+    private BucketManager bucketManager;
+
     /**
      * 构造函数
      *
@@ -39,6 +42,7 @@ public class QiniuUtil {
         this.bucketHostName = bucketHostName;
         this.bucketName = bucketName;
         this.auth = auth;
+        this.bucketManager = new BucketManager(auth);
     }
 
     public String generate(){
@@ -258,4 +262,11 @@ public class QiniuUtil {
         return bucketHostName + (key.startsWith("/") ? key : "/" + key);
     }
 
+    public void deleteFile(String key){
+        try {
+            bucketManager.delete(bucketName,key);
+        } catch (QiniuException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -51,4 +51,15 @@
         update t_mall_trade_mark set ppmch=#{ppmch},url=#{url} where id=#{id}
     </update>
 
+    <delete id="delete_tm">
+        delete from t_mall_trade_mark where id=#{id}
+    </delete>
+
+    <delete id="delete_tm_class">
+        delete from t_mall_tm_class where pp_id=#{pp_id}
+    </delete>
+
+    <select id="list_trademark" resultType="T_MALL_TRADE_MARK">
+        select * from t_mall_trade_mark
+    </select>
 </mapper>

@@ -8,6 +8,7 @@ import com.hxf.mall.service.CategoryService;
 import com.hxf.mall.to.AMessage;
 import com.hxf.mall.util.QiniuUtil;
 import com.hxf.mall.util.UploadFactory;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,8 @@ public class CategoryController {
 
     @Value("${qiniu.bucket.host.name}")
     private String bucketHostName;
+
+    private final static String TMUPLOADPATH = "trademark/";
 
     @GetMapping("listcategory1")
     public List<T_MALL_CLASS_1> list_cate1(){
@@ -116,23 +119,27 @@ public class CategoryController {
     }
 
     @GetMapping("category/tm/{flbh1}")
-    public AMessage listtrademark(@PathVariable int flbh1){
+    public AMessage listTrademarkByClass1(@PathVariable int flbh1){
         AMessage aMessage = new AMessage();
         aMessage.setData(categoryService.gettmList(flbh1));
         return aMessage;
     }
 
+    @GetMapping("category/tm")
+    public AMessage listtrademark(){
+        AMessage aMessage = new AMessage();
+        aMessage.setData(categoryService.gettmList());
+        return aMessage;
+    }
+
     @PostMapping("category/tm")
-    public AMessage add_tm(int flbh1,T_MALL_TRADE_MARK tm, MultipartFile file){
+    public AMessage add_tm(T_MALL_TRADE_MARK tm, MultipartFile file){
         QiniuUtil qiniuUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
                 this.bucketHostName, this.bucketName);
         categoryService.add_tm(tm);
-        Map<String,Object> map = new HashMap<>();
-        map.put("pp_id", tm.getId());
-        map.put("flbh1",flbh1);
-        categoryService.add_tm_class(map);
-        String fileName = String.valueOf(tm.getId())+ "-" + flbh1;
-        String imgUrl = qiniuUtil.uploadFile(file, fileName,"trademark/");
+        //先将品牌名称插入表后拿到记录id，然后使用七牛插件上传品牌图片，拿到图片的外链url，再更新这条记录
+        String fileName = String.valueOf(tm.getId());
+        String imgUrl = qiniuUtil.uploadFile(file, fileName,TMUPLOADPATH);
         tm.setUrl(imgUrl);
         categoryService.update_tm(tm);
         AMessage aMessage = new AMessage();
@@ -140,4 +147,19 @@ public class CategoryController {
         return aMessage;
     }
 
+    @DeleteMapping("category/tm/{id}")
+    public AMessage delete_tm(@PathVariable int id){
+        QiniuUtil qiniuUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
+                this.bucketHostName, this.bucketName);
+        categoryService.delete_tm(id);
+        Map<String,Object> map = new HashMap<>();
+        map.put("pp_id", id);
+        //删除一级分类与其关联的中间表记录
+        categoryService.delete_tm_class(id);
+        String key = TMUPLOADPATH + String.valueOf(id);//七牛上文件的key值
+        qiniuUtil.deleteFile(key);
+        AMessage aMessage = new AMessage();
+        aMessage.setData("success");
+        return aMessage;
+    }
 }

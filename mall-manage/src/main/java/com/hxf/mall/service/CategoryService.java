@@ -62,4 +62,16 @@ public class CategoryService {
     public void update_tm(T_MALL_TRADE_MARK tm) {
         categoryMapper.update_tm(tm);
     }
+
+    public void delete_tm(int id) {
+        categoryMapper.delete_tm(id);
+    }
+
+    public void delete_tm_class(int pp_id) {
+        categoryMapper.delete_tm_class(pp_id);
+    }
+
+    public List<T_MALL_TRADE_MARK> gettmList(){
+        return categoryMapper.list_trademark();
+    }
 }
