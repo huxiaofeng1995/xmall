@@ -37,4 +37,8 @@ public class SpuService {
         //遇到多参数传递时，最好封装成map，这样方便在mapper.xml中获取
         spuMapper.insert_imgs(map);
     }
+
+    public List<T_MALL_PRODUCT> getSpuList(T_MALL_PRODUCT spu) {
+        return spuMapper.select_spu_list(spu);
+    }
 }

@@ -27,4 +27,21 @@
         </foreach>
     </insert>
 
+    <select id="select_spu_list" parameterType="T_MALL_PRODUCT" resultType="T_MALL_PRODUCT">
+        select * from t_mall_product
+        <where>
+            <if test="shp_mch!=null &amp;&amp; shp_mch!=&quot;&quot;">
+                shp_mch like concat('%',#{shp_mch},'%')
+            </if>
+            <if test="flbh1!=null">
+                and flbh1=#{flbh1}
+            </if>
+            <if test="flbh2!=null">
+                and flbh2=#{flbh2}
+            </if>
+            <if test="pp_id!=null">
+                and pp_id=#{pp_id}
+            </if>
+        </where>
+    </select>
 </mapper>
