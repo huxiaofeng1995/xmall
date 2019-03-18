@@ -20,11 +20,11 @@ public class CategoryService {
         return categoryMapper.list_class1();
     }
 
-    public List<T_MALL_CLASS_2> getfl2List(int flbh1) {
+    public List<T_MALL_CLASS_2> getfl2List(Integer flbh1) {
         return categoryMapper.list_class2(flbh1);
     }
 
-    public List<T_MALL_TRADE_MARK> gettmList(int flbh1) {
+    public List<T_MALL_TRADE_MARK> gettmList(Integer flbh1) {
         return categoryMapper.list_tm(flbh1);
     }
 
@@ -36,7 +36,7 @@ public class CategoryService {
         categoryMapper.update_class1(class1);
     }
 
-    public void delete_first_cate(int id) {
+    public void delete_first_cate(Integer id) {
         categoryMapper.delete_class1(id);
     }
 
@@ -47,7 +47,7 @@ public class CategoryService {
     public void update_second_cate(T_MALL_CLASS_2 class2) {
         categoryMapper.update_class2(class2);
     }
-    public void delete_second_cate(int id) {
+    public void delete_second_cate(Integer id) {
         categoryMapper.delete_class2(id);
     }
 
@@ -63,11 +63,11 @@ public class CategoryService {
         categoryMapper.update_tm(tm);
     }
 
-    public void delete_tm(int id) {
+    public void delete_tm(Integer id) {
         categoryMapper.delete_tm(id);
     }
 
-    public void delete_tm_class(int pp_id) {
+    public void delete_tm_class(Integer pp_id) {
         categoryMapper.delete_tm_class(pp_id);
     }
 

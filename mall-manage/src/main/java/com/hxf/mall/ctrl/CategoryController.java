@@ -45,12 +45,12 @@ public class CategoryController {
     }
 
     @GetMapping("listcategory2/{flbh1}")
-    public List<T_MALL_CLASS_2> list_cate2(@PathVariable int flbh1){
+    public List<T_MALL_CLASS_2> list_cate2(@PathVariable Integer flbh1){
         return categoryService.getfl2List(flbh1);
     }
 
     @GetMapping("listtrademark/{flbh1}")
-    public List<T_MALL_TRADE_MARK> list_trademark(@PathVariable int flbh1){
+    public List<T_MALL_TRADE_MARK> list_trademark(@PathVariable Integer flbh1){
         return categoryService.gettmList(flbh1);
     }
 
@@ -79,7 +79,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("category/first/{id}")
-    public AMessage delete_first_cate(@PathVariable int id){
+    public AMessage delete_first_cate(@PathVariable Integer id){
         categoryService.delete_first_cate(id);
         AMessage aMessage = new AMessage();
         aMessage.setData("success");
@@ -87,7 +87,7 @@ public class CategoryController {
     }
 
     @GetMapping("category/second/{flbh1}")
-    public AMessage list_second_cate(@PathVariable int flbh1){
+    public AMessage list_second_cate(@PathVariable Integer flbh1){
         AMessage aMessage = new AMessage();
         aMessage.setData(categoryService.getfl2List(flbh1));
         return aMessage;
@@ -111,7 +111,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("category/second/{id}")
-    public AMessage delete_second_cate(@PathVariable int id){
+    public AMessage delete_second_cate(@PathVariable Integer id){
         categoryService.delete_second_cate(id);
         AMessage aMessage = new AMessage();
         aMessage.setData("success");
@@ -119,7 +119,7 @@ public class CategoryController {
     }
 
     @GetMapping("category/tm/{flbh1}")
-    public AMessage listTrademarkByClass1(@PathVariable int flbh1){
+    public AMessage listTrademarkByClass1(@PathVariable Integer flbh1){
         AMessage aMessage = new AMessage();
         aMessage.setData(categoryService.gettmList(flbh1));
         return aMessage;
@@ -148,7 +148,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("category/tm/{id}")
-    public AMessage delete_tm(@PathVariable int id){
+    public AMessage delete_tm(@PathVariable Integer id){
         QiniuUtil qiniuUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
                 this.bucketHostName, this.bucketName);
         categoryService.delete_tm(id);
@@ -164,7 +164,7 @@ public class CategoryController {
     }
 
     @PostMapping("/category/tmclass")
-    public AMessage add_tm_class(int pp_id, int flbh1){
+    public AMessage add_tm_class(Integer pp_id, Integer flbh1){
         Map<String,Object> map = new HashMap<>();
         map.put("pp_id", pp_id);
         map.put("flbh1", flbh1);
@@ -175,7 +175,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("category/tmclass/{id}/flbh1/{flbh1}")
-    public AMessage delete_tm_class(@PathVariable int id, @PathVariable int flbh1){
+    public AMessage delete_tm_class(@PathVariable Integer id, @PathVariable Integer flbh1){
         Map<String,Object> map = new HashMap<>();
         map.put("pp_id", id);
         map.put("flbh1", flbh1);

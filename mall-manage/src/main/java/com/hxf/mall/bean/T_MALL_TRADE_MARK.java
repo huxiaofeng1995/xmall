@@ -2,15 +2,15 @@ package com.hxf.mall.bean;
 
 public class T_MALL_TRADE_MARK {
 
-	private int id;
+	private Integer id;
 	private String ppmch;
 	private String url;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

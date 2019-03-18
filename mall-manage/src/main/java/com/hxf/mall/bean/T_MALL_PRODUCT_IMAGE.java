@@ -1,16 +1,16 @@
 package com.hxf.mall.bean;
 
 public class T_MALL_PRODUCT_IMAGE {
-	private int id;
+	private Integer id;
 	private String zy;//作用
-	private int shp_id;
+	private Integer shp_id;
 	private String url;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -22,11 +22,11 @@ public class T_MALL_PRODUCT_IMAGE {
 		this.zy = zy;
 	}
 
-	public int getShp_id() {
+	public Integer getShp_id() {
 		return shp_id;
 	}
 
-	public void setShp_id(int shp_id) {
+	public void setShp_id(Integer shp_id) {
 		this.shp_id = shp_id;
 	}
 

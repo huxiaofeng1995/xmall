@@ -2,14 +2,14 @@ package com.hxf.mall.bean;
 
 public class T_MALL_CLASS_1 {
 
-	private int id;
+	private Integer id;
 	private String flmch1;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
