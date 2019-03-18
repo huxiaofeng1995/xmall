@@ -34,7 +34,7 @@ public class RespFilter implements Filter {
             //封装成指定格式返回数据
             AMessage aMessage = new AMessage();
             aMessage.setCode(response.getStatus());
-            aMessage.setData(JSON.parseObject(result));
+            aMessage.setData(JSON.parse(result));
             result = JSON.toJSONString(aMessage);
         }
         catch (Exception e)
@@ -46,7 +46,6 @@ public class RespFilter implements Filter {
         out.write(result.getBytes());
         out.flush();
         out.close();
-
     }
 
     @Override
