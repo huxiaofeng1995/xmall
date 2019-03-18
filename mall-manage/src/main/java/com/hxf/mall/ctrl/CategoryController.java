@@ -55,85 +55,65 @@ public class CategoryController {
     }
 
     @GetMapping("category/first")
-    public AMessage list_first_cate(){
-        AMessage aMessage = new AMessage();
-        aMessage.setData(categoryService.getfl1List());
-        return aMessage;
+    public List<T_MALL_CLASS_1> list_first_cate(){
+        return categoryService.getfl1List();
     }
 
     @PostMapping("category/first")
-    public AMessage add_first_cate(T_MALL_CLASS_1 class1){
+    public String add_first_cate(T_MALL_CLASS_1 class1){
         categoryService.add_first_cate(class1);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 
     @PutMapping("category/first")
-    public AMessage update_first_cate(@RequestBody String info){
+    public String update_first_cate(@RequestBody String info){
         T_MALL_CLASS_1 class1 = JSON.parseObject(info, T_MALL_CLASS_1.class);
         categoryService.update_first_cate(class1);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 
     @DeleteMapping("category/first/{id}")
-    public AMessage delete_first_cate(@PathVariable Integer id){
+    public String delete_first_cate(@PathVariable Integer id){
         categoryService.delete_first_cate(id);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 
     @GetMapping("category/second/{flbh1}")
-    public AMessage list_second_cate(@PathVariable Integer flbh1){
-        AMessage aMessage = new AMessage();
-        aMessage.setData(categoryService.getfl2List(flbh1));
-        return aMessage;
+    public List<T_MALL_CLASS_2> list_second_cate(@PathVariable Integer flbh1){
+        return categoryService.getfl2List(flbh1);
     }
 
     @PostMapping("category/second")
-    public AMessage add_second_cate(T_MALL_CLASS_2 class2){
+    public String add_second_cate(T_MALL_CLASS_2 class2){
         categoryService.add_second_cate(class2);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 
     @PutMapping("category/second")
-    public AMessage update_second_cate(@RequestBody String info){
+    public String update_second_cate(@RequestBody String info){
         T_MALL_CLASS_2 class2 = JSON.parseObject(info, T_MALL_CLASS_2.class);
         categoryService.update_second_cate(class2);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 
     @DeleteMapping("category/second/{id}")
-    public AMessage delete_second_cate(@PathVariable Integer id){
+    public String delete_second_cate(@PathVariable Integer id){
         categoryService.delete_second_cate(id);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 
     @GetMapping("category/tm/{flbh1}")
-    public AMessage listTrademarkByClass1(@PathVariable Integer flbh1){
-        AMessage aMessage = new AMessage();
-        aMessage.setData(categoryService.gettmList(flbh1));
-        return aMessage;
+    public List<T_MALL_TRADE_MARK> listTrademarkByClass1(@PathVariable Integer flbh1){
+        return categoryService.gettmList(flbh1);
     }
 
     @GetMapping("category/tm")
-    public AMessage listtrademark(){
-        AMessage aMessage = new AMessage();
-        aMessage.setData(categoryService.gettmList());
-        return aMessage;
+    public List<T_MALL_TRADE_MARK> listtrademark(){
+        return categoryService.gettmList();
     }
 
     @PostMapping("category/tm")
-    public AMessage add_tm(T_MALL_TRADE_MARK tm, MultipartFile file){
+    public String add_tm(T_MALL_TRADE_MARK tm, MultipartFile file){
         QiniuUtil qiniuUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
                 this.bucketHostName, this.bucketName);
         categoryService.add_tm(tm);
@@ -142,13 +122,11 @@ public class CategoryController {
         String imgUrl = qiniuUtil.uploadFile(file, fileName,TMUPLOADPATH);
         tm.setUrl(imgUrl);
         categoryService.update_tm(tm);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 
     @DeleteMapping("category/tm/{id}")
-    public AMessage delete_tm(@PathVariable Integer id){
+    public String delete_tm(@PathVariable Integer id){
         QiniuUtil qiniuUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
                 this.bucketHostName, this.bucketName);
         categoryService.delete_tm(id);
@@ -158,30 +136,24 @@ public class CategoryController {
         categoryService.delete_tm_class(id);
         String key = TMUPLOADPATH + String.valueOf(id);//七牛上文件的key值
         qiniuUtil.deleteFile(key);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 
     @PostMapping("/category/tmclass")
-    public AMessage add_tm_class(Integer pp_id, Integer flbh1){
+    public String add_tm_class(Integer pp_id, Integer flbh1){
         Map<String,Object> map = new HashMap<>();
         map.put("pp_id", pp_id);
         map.put("flbh1", flbh1);
         categoryService.add_tm_class(map);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 
     @DeleteMapping("category/tmclass/{id}/flbh1/{flbh1}")
-    public AMessage delete_tm_class(@PathVariable Integer id, @PathVariable Integer flbh1){
+    public String delete_tm_class(@PathVariable Integer id, @PathVariable Integer flbh1){
         Map<String,Object> map = new HashMap<>();
         map.put("pp_id", id);
         map.put("flbh1", flbh1);
         categoryService.delete_tm_class2(map);
-        AMessage aMessage = new AMessage();
-        aMessage.setData("success");
-        return aMessage;
+        return "success";
     }
 }

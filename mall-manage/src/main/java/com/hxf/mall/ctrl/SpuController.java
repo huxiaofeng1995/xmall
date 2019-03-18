@@ -1,22 +1,19 @@
 package com.hxf.mall.ctrl;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxf.mall.bean.T_MALL_PRODUCT;
 import com.hxf.mall.service.SpuService;
-import com.hxf.mall.to.AMessage;
-import com.hxf.mall.util.FileUploadUtil;
+import com.hxf.mall.util.QiniuUtil;
+import com.hxf.mall.util.UploadFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class SpuController {
@@ -24,33 +21,45 @@ public class SpuController {
     @Autowired
     private SpuService spuService;
 
+    @Value("${qiniu.access.key}")
+    private String accesskey;
+
+    @Value("${qiniu.secret.key}")
+    private String secretKey;
+
+    @Value("${qiniu.bucket.name}")
+    private String bucketName;
+
+    @Value("${qiniu.bucket.host.name}")
+    private String bucketHostName;
+
+    private final static String TMUPLOADPATH = "product/";
+
     @PostMapping("spu")
-    public String spu_add(String spu, MultipartFile[] files, HttpServletRequest request) {
-        //String uploadPath = request.getServletContext().getRealPath("upload/img/product");
-        T_MALL_PRODUCT t_mall_product = JSON.parseObject(spu,T_MALL_PRODUCT.class);
-        File path = null;
-        try {
-            path = new File(ResourceUtils.getURL("classpath:").getPath());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        if(!path.exists()) path = new File("");
-        System.out.println("path:"+path.getAbsolutePath());
-        File upload = new File(path.getAbsolutePath(),"static/upload/img/product");
-        String uploadPath = upload.getAbsolutePath();
+    public String spu_add(T_MALL_PRODUCT t_mall_product, MultipartFile[] files) {
+        QiniuUtil qiniuUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
+                this.bucketHostName, this.bucketName);
+        //T_MALL_PRODUCT t_mall_product = JSON.parseObject(spu,T_MALL_PRODUCT.class);
+
         //上传图片
-        List<String> imgs = FileUploadUtil.upload_img(uploadPath, files);
-//        //保存商品
+        List<String> imgs = new ArrayList<>();
+        for(MultipartFile file:files){
+            String originName = file.getOriginalFilename();
+            //名字去重
+            String filename = UUID.randomUUID().toString() + originName;
+            String imgUrl = qiniuUtil.uploadFile(file, filename,TMUPLOADPATH);
+            imgs.add(imgUrl);
+        }
+
+        //保存商品
         spuService.sava_spu(imgs, t_mall_product);
         return "success";
     }
 
     @GetMapping("spu-list")
-    public AMessage getSpuList(T_MALL_PRODUCT spu,@RequestParam(value = "pageNum",defaultValue = "1")int pageNum, @RequestParam(value = "pageSize",defaultValue = "5")int pageSize){
+    public PageInfo<T_MALL_PRODUCT> getSpuList(T_MALL_PRODUCT spu,@RequestParam(value = "pageNum",defaultValue = "1")int pageNum, @RequestParam(value = "pageSize",defaultValue = "5")int pageSize){
         PageHelper.startPage(pageNum, pageSize);
         PageInfo<T_MALL_PRODUCT> page = new PageInfo<>(spuService.getSpuList(spu));
-        AMessage aMessage = new AMessage();
-        aMessage.setData(page);
-        return aMessage;
+        return page;
     }
 }
