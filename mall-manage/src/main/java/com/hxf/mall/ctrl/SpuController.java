@@ -1,5 +1,6 @@
 package com.hxf.mall.ctrl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxf.mall.bean.T_MALL_PRODUCT;
@@ -14,7 +15,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -44,19 +47,26 @@ public class SpuController {
         //T_MALL_PRODUCT t_mall_product = JSON.parseObject(spu,T_MALL_PRODUCT.class);
 
         //上传图片
-//        List<String> imgs = new ArrayList<>();
-//        for(MultipartFile file:files){
-//            String originName = file.getOriginalFilename();
-//            //名字去重
-//            String filename = UUID.randomUUID().toString() + ".jpg";
-//            String imgUrl = qiniuUtil.uploadFile(file, filename,TMUPLOADPATH);
-//            imgs.add(imgUrl);
-//        }
-//
-//        //保存商品
-//        spuService.sava_spu(imgs, t_mall_product);
+        List<String> imgs = new ArrayList<>();
+        for(MultipartFile file:files){
+            String originName = file.getOriginalFilename();
+            //名字去重
+            String filename = UUID.randomUUID().toString() + ".jpg";
+            String imgUrl = qiniuUtil.uploadFile(file, filename,TMUPLOADPATH);
+            imgs.add(imgUrl);
+        }
+
+        //保存商品
+        spuService.sava_spu(imgs, t_mall_product);
         return ResponseDataUtil.buildSuccess("success");
     }
+
+    @GetMapping("spu/{id}")
+    public ResponseData get_spu(@PathVariable Integer id){
+        return ResponseDataUtil.buildSuccess(spuService.get_spu(id));
+    }
+
+
 
     @DeleteMapping("spu/{id}")
     public ResponseData del_spu(@PathVariable Integer id){
@@ -70,6 +80,13 @@ public class SpuController {
             spuService.delet_spu_image(img.getId());
         }
         spuService.del_spu(id);
+        return ResponseDataUtil.buildSuccess("success");
+    }
+
+    @PutMapping("spu")
+    public ResponseData update_spu(@RequestBody String info){
+        T_MALL_PRODUCT spu = JSON.parseObject(info, T_MALL_PRODUCT.class);
+        spuService.update_spu(spu);
         return ResponseDataUtil.buildSuccess("success");
     }
 

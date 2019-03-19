@@ -60,4 +60,8 @@
     <select id="select_spu" resultType="T_MALL_PRODUCT">
         SELECT * FROM t_mall_product WHERE id=#{id}
     </select>
+
+    <update id="update_spu" parameterType="T_MALL_PRODUCT">
+        update t_mall_product set shp_mch=#{shp_mch},shp_msh=#{shp_msh}
+    </update>
 </mapper>
