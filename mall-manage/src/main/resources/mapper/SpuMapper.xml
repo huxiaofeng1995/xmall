@@ -44,4 +44,20 @@
             </if>
         </where>
     </select>
+
+    <delete id="delete_spu">
+        delete from t_mall_product where id=#{id}
+    </delete>
+
+    <delete id="delete_img">
+        delete from t_mall_product_image where id=#{id}
+    </delete>
+
+    <select id="select_spu_img_list" resultType="T_MALL_PRODUCT_IMAGE">
+        SELECT * FROM t_mall_product_image WHERE shp_id=#{shp_id}
+    </select>
+
+    <select id="select_spu" resultType="T_MALL_PRODUCT">
+        SELECT * FROM t_mall_product WHERE id=#{id}
+    </select>
 </mapper>

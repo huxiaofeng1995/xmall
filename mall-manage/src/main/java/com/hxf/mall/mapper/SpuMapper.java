@@ -14,4 +14,12 @@ public interface SpuMapper {
     void insert_imgs(Map<String, Object> map);
 
     List<T_MALL_PRODUCT> select_spu_list(T_MALL_PRODUCT t_mall_product);
+
+    void delete_spu(Integer id);
+
+    void delete_img(Integer id);
+
+    T_MALL_PRODUCT select_spu(Integer id);
+
+    List<T_MALL_PRODUCT_IMAGE> select_spu_img_list(Integer shp_id);
 }

@@ -41,4 +41,16 @@ public class SpuService {
     public List<T_MALL_PRODUCT> getSpuList(T_MALL_PRODUCT spu) {
         return spuMapper.select_spu_list(spu);
     }
+
+    public void del_spu(Integer id){
+        spuMapper.delete_spu(id);
+    }
+
+    public void delet_spu_image(Integer id){
+        spuMapper.delete_img(id);
+    }
+
+    public List<T_MALL_PRODUCT_IMAGE> get_spu_img_list(Integer shp_id){
+        return spuMapper.select_spu_img_list(shp_id);
+    }
 }
