@@ -96,4 +96,34 @@ public class SpuController {
         PageInfo<T_MALL_PRODUCT> page = new PageInfo<>(spuService.getSpuList(spu));
         return ResponseDataUtil.buildSuccess(page);
     }
+
+    @GetMapping("spu-imgs/{id}")
+    public ResponseData getSpuImgList(@PathVariable Integer id){
+        return ResponseDataUtil.buildSuccess(spuService.get_spu_img_list(id));
+    }
+
+    @PostMapping("spu-img")
+    public ResponseData addSpuImg(T_MALL_PRODUCT_IMAGE img, MultipartFile file){
+        QiniuUtil qiniuUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
+                this.bucketHostName, this.bucketName);
+        String filename = UUID.randomUUID().toString() + ".jpg";
+        String imgUrl = qiniuUtil.uploadFile(file, filename,TMUPLOADPATH);
+        img.setUrl(imgUrl);
+        spuService.add_spu_img(img);
+        return ResponseDataUtil.buildSuccess("success");
+    }
+
+    @PutMapping("spu-img")
+    public ResponseData updateSpuImg(@RequestBody String info){
+        T_MALL_PRODUCT_IMAGE img = JSON.parseObject(info, T_MALL_PRODUCT_IMAGE.class);
+        spuService.updateSpuImg(img);
+        return ResponseDataUtil.buildSuccess("success");
+    }
+
+    @PutMapping("spu-img/main")
+    public ResponseData setMainImg(@RequestBody String info){
+        T_MALL_PRODUCT_IMAGE img = JSON.parseObject(info, T_MALL_PRODUCT_IMAGE.class);
+        spuService.setMainImg(img);
+        return ResponseDataUtil.buildSuccess("success");
+    }
 }

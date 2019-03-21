@@ -24,4 +24,8 @@ public interface SpuMapper {
     List<T_MALL_PRODUCT_IMAGE> select_spu_img_list(Integer shp_id);
 
     void update_spu(T_MALL_PRODUCT spu);
+
+    void update_spu_image(T_MALL_PRODUCT_IMAGE img);
+
+    void update_spu_main_img(T_MALL_PRODUCT_IMAGE img);
 }

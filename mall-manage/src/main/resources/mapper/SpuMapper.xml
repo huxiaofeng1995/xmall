@@ -13,9 +13,9 @@
 
     <insert id="insert_spu_image" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="T_MALL_PRODUCT_IMAGE">
         insert into t_mall_product_image
-        (shp_id,url)
+        (shp_id,url,zy)
         values
-        (#{shp_id},#{url})
+        (#{shp_id},#{url},#{zy})
     </insert>
 
     <insert id="insert_imgs"  parameterType="Map">
@@ -62,6 +62,14 @@
     </select>
 
     <update id="update_spu" parameterType="T_MALL_PRODUCT">
-        update t_mall_product set shp_mch=#{shp_mch},shp_msh=#{shp_msh}
+        update t_mall_product set shp_mch=#{shp_mch},shp_msh=#{shp_msh} where id=#{id}
+    </update>
+
+    <update id="update_spu_image" parameterType="T_MALL_PRODUCT_IMAGE">
+        UPDATE t_mall_product_image SET zy=#{zy} WHERE id=#{id}
+    </update>
+
+    <update id="update_spu_main_img" parameterType="T_MALL_PRODUCT_IMAGE">
+        UPDATE t_mall_product SET shp_tp=#{url} WHERE id=#{shp_id}
     </update>
 </mapper>

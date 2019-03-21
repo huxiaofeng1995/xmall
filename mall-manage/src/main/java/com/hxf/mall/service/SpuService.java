@@ -61,4 +61,17 @@ public class SpuService {
     public T_MALL_PRODUCT get_spu(Integer id) {
         return spuMapper.select_spu(id);
     }
+
+    public void add_spu_img(T_MALL_PRODUCT_IMAGE img) {
+        spuMapper.insert_spu_image(img);
+    }
+
+    public void updateSpuImg(T_MALL_PRODUCT_IMAGE img) {
+        spuMapper.update_spu_image(img);
+    }
+
+    public void setMainImg(T_MALL_PRODUCT_IMAGE img) {
+        spuMapper.update_spu_main_img(img);
+    }
+
 }
