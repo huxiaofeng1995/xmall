@@ -30,4 +30,31 @@
         select * FROM t_mall_value
         where shxm_id=#{id}
     </select>
+
+    <insert id="insert_attr_value" parameterType="T_MALL_VALUE">
+        INSERT INTO t_mall_value (shxzh,shxzh_mch,shxm_id) VALUES (#{shxzh},#{shxzh_mch},#{shxm_id})
+    </insert>
+
+    <delete id="delete_attr">
+        DELETE FROM t_mall_attr WHERE id=#{id}
+    </delete>
+
+    <delete id="delete_attr_value">
+        DELETE FROM t_mall_value WHERE id=#{id}
+    </delete>
+
+    <delete id="delete_attr_value_by_shxmid">
+        DELETE FROM t_mall_value WHERE shxm_id=#{id}
+    </delete>
+
+    <insert id="insert_attr" parameterType="com.hxf.mall.to.OBJECT_T_MALL_ATTR" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO t_mall_attr (shxm_mch,flbh2) VALUES (#{shxm_mch},#{flbh2})
+    </insert>
+
+    <insert id="insert_attr_values" parameterType="T_MALL_VALUE">
+        INSERT INTO t_mall_value (shxzh,shxzh_mch,shxm_id) VALUES 
+        <foreach item="item" collection="list_value" separator=","><!--使用命名参数传入 -->
+            (#{item.shxzh},#{item.shxzh_mch},#{shxid})
+        </foreach>
+    </insert>
 </mapper>

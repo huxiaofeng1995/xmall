@@ -1,16 +1,15 @@
 package com.hxf.mall.ctrl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.hxf.mall.bean.T_MALL_VALUE;
 import com.hxf.mall.service.AttrService;
 import com.hxf.mall.to.OBJECT_T_MALL_ATTR;
 import com.hxf.mall.to.ResponseData;
 import com.hxf.mall.util.ResponseDataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +25,30 @@ public class AttrController {
         List<OBJECT_T_MALL_ATTR> list = attrService.get_attr_list(flbh2);
         PageInfo<OBJECT_T_MALL_ATTR> page = new PageInfo<OBJECT_T_MALL_ATTR>(list);
         return ResponseDataUtil.buildSuccess(page);
+    }
+
+    @PostMapping("attr-value")
+    public ResponseData addAttrValue(T_MALL_VALUE value){
+        attrService.addAttrValue(value);
+        return ResponseDataUtil.buildSuccess("Attr Value Add Success");
+    }
+
+    @DeleteMapping("attr/{id}")
+    public ResponseData deleteAttr(@PathVariable Integer id){
+        attrService.deleteAttr(id);
+        return ResponseDataUtil.buildSuccess("Attr Delete Success");
+    }
+
+    @DeleteMapping("attr-value/{id}")
+    public ResponseData deleteAttrValue(@PathVariable Integer id){
+        attrService.deleteAttrValue(id);
+        return ResponseDataUtil.buildSuccess("Attr Value Delete Success");
+    }
+
+    @PostMapping("/attr")
+    public ResponseData addAttr(@RequestBody String attr){
+        OBJECT_T_MALL_ATTR t_mall_attr = JSON.parseObject(attr, OBJECT_T_MALL_ATTR.class);
+        attrService.addAttr(t_mall_attr);
+        return ResponseDataUtil.buildSuccess("Attr Add Success");
     }
 }
