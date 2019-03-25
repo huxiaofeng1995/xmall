@@ -27,10 +27,10 @@ spring:
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
 
-  servlet:
-    multipart:
-      maxFileSize: 1MB #单个文件大小
-      maxRequestSize: 10MB  #总上传文件大小
+#  servlet:
+#    multipart:
+#      maxFileSize: 2048MB #单个文件大小
+#      maxRequestSize: 2048MB  #总上传文件大小
 
 #设置静态资源路径，多个以逗号分隔
   resources:
