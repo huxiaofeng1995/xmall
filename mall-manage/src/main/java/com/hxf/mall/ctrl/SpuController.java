@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hxf.mall.bean.T_MALL_PRODUCT;
+import com.hxf.mall.bean.T_MALL_PRODUCT_COLOR;
 import com.hxf.mall.bean.T_MALL_PRODUCT_IMAGE;
+import com.hxf.mall.bean.T_MALL_PRODUCT_VERSION;
 import com.hxf.mall.service.SpuService;
 import com.hxf.mall.to.ResponseData;
 import com.hxf.mall.util.QiniuUtil;
 import com.hxf.mall.util.ResponseDataUtil;
 import com.hxf.mall.util.UploadFactory;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -41,11 +44,12 @@ public class SpuController {
     private final static String TMUPLOADPATH = "product/";
 
     @PostMapping("spu")
-    public ResponseData<String> add_spu(T_MALL_PRODUCT t_mall_product, MultipartFile[] files) {
+    public ResponseData<String> add_spu(T_MALL_PRODUCT t_mall_product,String colors,String versions, MultipartFile[] files) {
+        List<T_MALL_PRODUCT_COLOR> colorList = JSON.parseArray(colors,T_MALL_PRODUCT_COLOR.class);
+        List<T_MALL_PRODUCT_VERSION> versionList = JSON.parseArray(versions,T_MALL_PRODUCT_VERSION.class);
         QiniuUtil qiniuUtil = UploadFactory.createUpload(this.accesskey, this.secretKey,
                 this.bucketHostName, this.bucketName);
         //T_MALL_PRODUCT t_mall_product = JSON.parseObject(spu,T_MALL_PRODUCT.class);
-
         //上传图片
         List<String> imgs = new ArrayList<>();
         for(MultipartFile file:files){
@@ -58,6 +62,8 @@ public class SpuController {
 
         //保存商品
         spuService.sava_spu(imgs, t_mall_product);
+        spuService.save_spu_color(t_mall_product.getId(),colorList);
+        spuService.save_spu_version(t_mall_product.getId(),versionList);
         return ResponseDataUtil.buildSuccess("success");
     }
 

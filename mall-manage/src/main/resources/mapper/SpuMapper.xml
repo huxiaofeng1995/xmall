@@ -72,4 +72,18 @@
     <update id="update_spu_main_img" parameterType="T_MALL_PRODUCT_IMAGE">
         UPDATE t_mall_product SET shp_tp=#{url} WHERE id=#{shp_id}
     </update>
+
+    <insert id="insert_spu_color">
+        INSERT INTO t_mall_product_color (shp_id,shp_ys) VALUES
+        <foreach collection="list_color" item="item" separator=",">
+            (#{spuId},#{item.shp_ys})
+        </foreach>
+    </insert>
+
+    <insert id="insert_spu_version">
+        INSERT INTO t_mall_product_version (shp_id,shp_bb) VALUES
+        <foreach collection="list_version" item="item" separator=",">
+            (#{spuId},#{item.shp_bb})
+        </foreach>
+    </insert>
 </mapper>

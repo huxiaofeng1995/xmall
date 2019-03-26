@@ -1,7 +1,9 @@
 package com.hxf.mall.service;
 
 import com.hxf.mall.bean.T_MALL_PRODUCT;
+import com.hxf.mall.bean.T_MALL_PRODUCT_COLOR;
 import com.hxf.mall.bean.T_MALL_PRODUCT_IMAGE;
+import com.hxf.mall.bean.T_MALL_PRODUCT_VERSION;
 import com.hxf.mall.mapper.SpuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,4 +76,11 @@ public class SpuService {
         spuMapper.update_spu_main_img(img);
     }
 
+    public void save_spu_color(Integer id, List<T_MALL_PRODUCT_COLOR> colors) {
+        spuMapper.insert_spu_color(id, colors);
+    }
+
+    public void save_spu_version(Integer id, List<T_MALL_PRODUCT_VERSION> versions) {
+        spuMapper.insert_spu_version(id, versions);
+    }
 }

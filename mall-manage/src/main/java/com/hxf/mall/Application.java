@@ -11,12 +11,6 @@ import org.springframework.web.multipart.MultipartResolver;
 @MapperScan("com.hxf.mall.mapper")
 public class Application{
 
-	@Bean(name = "multipartResolver")
-	public MultipartResolver multipartResolver()
-	{
-		return new CustomMultipartResolver();
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
