@@ -83,4 +83,12 @@ public class SpuService {
     public void save_spu_version(Integer id, List<T_MALL_PRODUCT_VERSION> versions) {
         spuMapper.insert_spu_version(id, versions);
     }
+
+    public List<T_MALL_PRODUCT_COLOR> get_spu_colors(Integer id) {
+        return spuMapper.select_spu_colors(id);
+    }
+
+    public List<T_MALL_PRODUCT_VERSION> get_spu_versions(Integer id) {
+        return spuMapper.select_spu_versions(id);
+    }
 }

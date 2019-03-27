@@ -1,5 +1,7 @@
 package com.hxf.mall.service;
 
+import com.hxf.mall.bean.T_MALL_PRODUCT_COLOR;
+import com.hxf.mall.bean.T_MALL_PRODUCT_VERSION;
 import com.hxf.mall.bean.T_MALL_VALUE;
 import com.hxf.mall.mapper.AttrMapper;
 import com.hxf.mall.to.OBJECT_T_MALL_ATTR;
@@ -34,5 +36,21 @@ public class AttrService {
     public void addAttr(OBJECT_T_MALL_ATTR t_mall_attr) {
         attrMapper.insert_attr(t_mall_attr);
         attrMapper.insert_attr_values(t_mall_attr.getId(), t_mall_attr.getList_value());
+    }
+
+    public void deleteColor(Integer id) {
+        attrMapper.delete_color(id);
+    }
+
+    public void addColor(T_MALL_PRODUCT_COLOR color) {
+        attrMapper.insert_color(color);
+    }
+
+    public void deleteVersion(Integer id) {
+        attrMapper.delete_version(id);
+    }
+
+    public void addVersion(T_MALL_PRODUCT_VERSION version) {
+        attrMapper.insert_version(version);
     }
 }

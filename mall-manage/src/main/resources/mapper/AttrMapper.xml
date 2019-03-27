@@ -57,4 +57,20 @@
             (#{item.shxzh},#{item.shxzh_mch},#{shxid})
         </foreach>
     </insert>
+    
+    <insert id="insert_color" parameterType="T_MALL_PRODUCT_COLOR">
+        INSERT INTO t_mall_product_color (shp_id,shp_ys) VALUES (#{shp_id},#{shp_ys})
+    </insert>
+
+    <delete id="delete_color">
+        DELETE FROM t_mall_product_color WHERE id=#{id}
+    </delete>
+
+    <insert id="insert_version" parameterType="T_MALL_PRODUCT_VERSION">
+        INSERT INTO t_mall_product_version (shp_id,shp_bb) VALUES (#{shp_id},#{shp_bb})
+    </insert>
+
+    <delete id="delete_version">
+        DELETE FROM t_mall_product_version WHERE id=#{id}
+    </delete>
 </mapper>

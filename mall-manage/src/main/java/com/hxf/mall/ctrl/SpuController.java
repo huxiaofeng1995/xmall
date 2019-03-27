@@ -132,4 +132,14 @@ public class SpuController {
         spuService.setMainImg(img);
         return ResponseDataUtil.buildSuccess("success");
     }
+
+    @GetMapping("spu-colors/{id}")
+    public ResponseData getColors(@PathVariable Integer id){
+        return ResponseDataUtil.buildSuccess(spuService.get_spu_colors(id));
+    }
+
+    @GetMapping("spu-versions/{id}")
+    public ResponseData getVersions(@PathVariable Integer id){
+        return ResponseDataUtil.buildSuccess(spuService.get_spu_versions(id));
+    }
 }

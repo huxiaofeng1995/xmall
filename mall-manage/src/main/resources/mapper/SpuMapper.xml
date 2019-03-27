@@ -86,4 +86,12 @@
             (#{spuId},#{item.shp_bb})
         </foreach>
     </insert>
+
+    <select id="select_spu_colors" resultType="T_MALL_PRODUCT_COLOR">
+        SELECT * FROM t_mall_product_color WHERE shp_id=#{id}
+    </select>
+
+    <select id="select_spu_versions" resultType="T_MALL_PRODUCT_VERSION">
+        SELECT * FROM t_mall_product_version WHERE shp_id=#{id}
+    </select>
 </mapper>

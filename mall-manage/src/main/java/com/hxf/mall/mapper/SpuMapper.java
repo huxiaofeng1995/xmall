@@ -35,4 +35,8 @@ public interface SpuMapper {
     void insert_spu_color(@Param("spuId")Integer id, @Param("list_color")List<T_MALL_PRODUCT_COLOR> colors);
 
     void insert_spu_version(@Param("spuId")Integer id,@Param("list_version") List<T_MALL_PRODUCT_VERSION> versions);
+
+    List<T_MALL_PRODUCT_COLOR> select_spu_colors(Integer id);
+
+    List<T_MALL_PRODUCT_VERSION> select_spu_versions(Integer id);
 }

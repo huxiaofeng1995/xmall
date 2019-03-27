@@ -1,5 +1,7 @@
 package com.hxf.mall.mapper;
 
+import com.hxf.mall.bean.T_MALL_PRODUCT_COLOR;
+import com.hxf.mall.bean.T_MALL_PRODUCT_VERSION;
 import com.hxf.mall.bean.T_MALL_VALUE;
 import com.hxf.mall.to.OBJECT_T_MALL_ATTR;
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +22,12 @@ public interface AttrMapper {
     public void insert_attr_values(@Param("shxid") int shxid, @Param("list_value")List<T_MALL_VALUE> list);
 
     void insert_attr(OBJECT_T_MALL_ATTR t_mall_attr);
+
+    void delete_color(Integer id);
+
+    void insert_color(T_MALL_PRODUCT_COLOR color);
+
+    void delete_version(Integer id);
+
+    void insert_version(T_MALL_PRODUCT_VERSION version);
 }
