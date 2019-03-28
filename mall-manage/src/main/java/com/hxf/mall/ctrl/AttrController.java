@@ -29,6 +29,11 @@ public class AttrController {
         return ResponseDataUtil.buildSuccess(page);
     }
 
+    @GetMapping("attr-list/{flbh2}")
+    public ResponseData getAllAttrList(@PathVariable Integer flbh2){
+        return ResponseDataUtil.buildSuccess(attrService.get_attr_list(flbh2));
+    }
+
     @PostMapping("attr-value")
     public ResponseData addAttrValue(T_MALL_VALUE value){
         attrService.addAttrValue(value);

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxf.mall.mapper.SkuMapper">
+    <insert id="insert_sku" parameterType="com.hxf.mall.to.MODEL_T_MALL_SKU" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO t_mall_sku (shp_id,kc,jg,sku_mch,kcdz,sku_xl) VALUES
+        (#{shp_id},#{kc},#{jg},#{sku_mch},#{kcdz},#{sku_xl})
+    </insert>
+
+    <insert id="insert_sku_info" parameterType="T_MALL_PRODUCT_SKU_INFO">
+        INSERT INTO t_mall_product_sku_info (sku_id,pp_id,shp_ys,shp_bb) VALUES
+        (#{sku_id},#{pp_id},#{shp_ys},#{shp_bb})
+    </insert>
+
+    <insert id="insert_sku_attr_value" parameterType="T_MALL_SKU_ATTR_VALUE">
+        INSERT INTO t_mall_sku_attr_value (shxm_id,shxzh_id,shp_id,sku_id) VALUES
+        (#{shxm_id},#{shxzh_id},#{shp_id},#{sku_id})
+    </insert>
+</mapper>
