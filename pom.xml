@@ -17,6 +17,7 @@
     </parent>
     <modules>
         <module>mall-manage</module>
+        <module>mall-sale</module>
     </modules>
 
 
