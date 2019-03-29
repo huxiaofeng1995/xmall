@@ -2,7 +2,7 @@ package com.hxf.mall.bean;
 
 public class T_MALL_USER {
 
-	private int id;
+	private Integer id;
 	private String yh_mch;
 	private String yh_nch;
 	private String yh_mm;
@@ -11,11 +11,11 @@ public class T_MALL_USER {
 	private String yh_yx;
 	private String yh_tx;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

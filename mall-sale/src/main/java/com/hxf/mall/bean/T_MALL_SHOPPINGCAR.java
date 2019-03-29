@@ -3,15 +3,15 @@ package com.hxf.mall.bean;
 import java.util.Date;
 
 public class T_MALL_SHOPPINGCAR {
-	private int id;
+	private Integer id;
 	private String sku_mch;
 	private double sku_jg;
-	private int tjshl;
+	private Integer tjshl;
 	private double hj;
-	private int yh_id;
-	private int shp_id;
+	private Integer yh_id;
+	private Integer shp_id;
 	private Date chjshj;
-	private int sku_id;
+	private Integer sku_id;
 	private String shp_tp;
 	private String shfxz;
 
@@ -25,11 +25,11 @@ public class T_MALL_SHOPPINGCAR {
 		this.kcdz = kcdz;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -49,11 +49,11 @@ public class T_MALL_SHOPPINGCAR {
 		this.sku_jg = sku_jg;
 	}
 
-	public int getTjshl() {
+	public Integer getTjshl() {
 		return tjshl;
 	}
 
-	public void setTjshl(int tjshl) {
+	public void setTjshl(Integer tjshl) {
 		this.tjshl = tjshl;
 	}
 
@@ -65,19 +65,19 @@ public class T_MALL_SHOPPINGCAR {
 		this.hj = hj;
 	}
 
-	public int getYh_id() {
+	public Integer getYh_id() {
 		return yh_id;
 	}
 
-	public void setYh_id(int yh_id) {
+	public void setYh_id(Integer yh_id) {
 		this.yh_id = yh_id;
 	}
 
-	public int getShp_id() {
+	public Integer getShp_id() {
 		return shp_id;
 	}
 
-	public void setShp_id(int shp_id) {
+	public void setShp_id(Integer shp_id) {
 		this.shp_id = shp_id;
 	}
 
@@ -89,11 +89,11 @@ public class T_MALL_SHOPPINGCAR {
 		this.chjshj = chjshj;
 	}
 
-	public int getSku_id() {
+	public Integer getSku_id() {
 		return sku_id;
 	}
 
-	public void setSku_id(int sku_id) {
+	public void setSku_id(Integer sku_id) {
 		this.sku_id = sku_id;
 	}
 

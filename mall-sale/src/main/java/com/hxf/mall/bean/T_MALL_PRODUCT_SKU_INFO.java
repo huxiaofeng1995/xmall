@@ -3,21 +3,21 @@ package com.hxf.mall.bean;
 import java.util.Date;
 
 public class T_MALL_PRODUCT_SKU_INFO {
-	private int sku_id;//编号
+	private Integer sku_id;//编号
 	private String shp_msh;
 	private String shp_lb;//商品类别
-	private int pp_id;
+	private Integer pp_id;
 	private String shp_chc;//尺寸
 	private String shpz_zhl;//重量
-	private int shp_ys;
-	private int shp_bb;
+	private Integer shp_ys;
+	private Integer shp_bb;
 	private Date chjshj;
 
-	public int getSku_id() {
+	public Integer getSku_id() {
 		return sku_id;
 	}
 
-	public void setSku_id(int sku_id) {
+	public void setSku_id(Integer sku_id) {
 		this.sku_id = sku_id;
 	}
 
@@ -37,11 +37,11 @@ public class T_MALL_PRODUCT_SKU_INFO {
 		this.shp_lb = shp_lb;
 	}
 
-	public int getPp_id() {
+	public Integer getPp_id() {
 		return pp_id;
 	}
 
-	public void setPp_id(int pp_id) {
+	public void setPp_id(Integer pp_id) {
 		this.pp_id = pp_id;
 	}
 
@@ -61,19 +61,19 @@ public class T_MALL_PRODUCT_SKU_INFO {
 		this.shpz_zhl = shpz_zhl;
 	}
 
-	public int getShp_ys() {
+	public Integer getShp_ys() {
 		return shp_ys;
 	}
 
-	public void setShp_ys(int shp_ys) {
+	public void setShp_ys(Integer shp_ys) {
 		this.shp_ys = shp_ys;
 	}
 
-	public int getShp_bb() {
+	public Integer getShp_bb() {
 		return shp_bb;
 	}
 
-	public void setShp_bb(int shp_bb) {
+	public void setShp_bb(Integer shp_bb) {
 		this.shp_bb = shp_bb;
 	}
 

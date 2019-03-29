@@ -2,18 +2,18 @@ package com.hxf.mall.bean;
 
 public class T_MALL_ADDRESS {
 
-	private int id;
+	private Integer id;
 	private String yh_dz;
 	private String dzzt;
-	private int yh_id;
+	private Integer yh_id;
 	private String shjr;
 	private String lxfsh;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -33,11 +33,11 @@ public class T_MALL_ADDRESS {
 		this.dzzt = dzzt;
 	}
 
-	public int getYh_id() {
+	public Integer getYh_id() {
 		return yh_id;
 	}
 
-	public void setYh_id(int yh_id) {
+	public void setYh_id(Integer yh_id) {
 		this.yh_id = yh_id;
 	}
 

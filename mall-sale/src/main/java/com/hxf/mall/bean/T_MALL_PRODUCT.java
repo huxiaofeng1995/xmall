@@ -4,20 +4,20 @@ import java.util.Date;
 
 public class T_MALL_PRODUCT {
 
-	private int id;
+	private Integer id;
 	private String shp_mch;
 	private String shp_tp;
-	private int flbh1;
-	private int flbh2;
-	private int pp_id;
+	private Integer flbh1;
+	private Integer flbh2;
+	private Integer pp_id;
 	private Date chjshj;
 	private String shp_msh;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -37,27 +37,27 @@ public class T_MALL_PRODUCT {
 		this.shp_tp = shp_tp;
 	}
 
-	public int getFlbh1() {
+	public Integer getFlbh1() {
 		return flbh1;
 	}
 
-	public void setFlbh1(int flbh1) {
+	public void setFlbh1(Integer flbh1) {
 		this.flbh1 = flbh1;
 	}
 
-	public int getFlbh2() {
+	public Integer getFlbh2() {
 		return flbh2;
 	}
 
-	public void setFlbh2(int flbh2) {
+	public void setFlbh2(Integer flbh2) {
 		this.flbh2 = flbh2;
 	}
 
-	public int getPp_id() {
+	public Integer getPp_id() {
 		return pp_id;
 	}
 
-	public void setPp_id(int pp_id) {
+	public void setPp_id(Integer pp_id) {
 		this.pp_id = pp_id;
 	}
 

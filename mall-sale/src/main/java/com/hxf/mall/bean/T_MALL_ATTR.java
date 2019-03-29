@@ -5,18 +5,18 @@ import java.util.List;
 
 public class T_MALL_ATTR {
 
-	private int id;
+	private Integer id;
 	private String shxm_mch;
 	private String shfqy;
-	private int flbh2;
+	private Integer flbh2;
 	private Date chjshj;
 
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -36,11 +36,11 @@ public class T_MALL_ATTR {
 		this.shfqy = shfqy;
 	}
 
-	public int getFlbh2() {
+	public Integer getFlbh2() {
 		return flbh2;
 	}
 
-	public void setFlbh2(int flbh2) {
+	public void setFlbh2(Integer flbh2) {
 		this.flbh2 = flbh2;
 	}
 

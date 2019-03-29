@@ -3,22 +3,22 @@ package com.hxf.mall.bean;
 import java.util.Date;
 
 public class T_MALL_FLOW {
-	private int id;
+	private Integer id;
 	private String psfsh;
 	private Date psshj;
 	private String psmsh;
-	private int yh_id;
-	private int dd_id;
+	private Integer yh_id;
+	private Integer dd_id;
 	private String mqdd;
 	private String mdd;
 	private String ywy;
 	private String lxfsh;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -46,19 +46,19 @@ public class T_MALL_FLOW {
 		this.psmsh = psmsh;
 	}
 
-	public int getYh_id() {
+	public Integer getYh_id() {
 		return yh_id;
 	}
 
-	public void setYh_id(int yh_id) {
+	public void setYh_id(Integer yh_id) {
 		this.yh_id = yh_id;
 	}
 
-	public int getDd_id() {
+	public Integer getDd_id() {
 		return dd_id;
 	}
 
-	public void setDd_id(int dd_id) {
+	public void setDd_id(Integer dd_id) {
 		this.dd_id = dd_id;
 	}
 

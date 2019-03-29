@@ -3,17 +3,17 @@ package com.hxf.mall.bean;
 import java.util.Date;
 
 public class T_MALL_PRODUCT_VERSION {
-	private int id;//编号
+	private Integer id;//编号
 	private String shp_bb;//版本
-	private int shp_id;//商品id
+	private Integer shp_id;//商品id
 	private String shfqy;
 	private Date chjshj;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -25,11 +25,11 @@ public class T_MALL_PRODUCT_VERSION {
 		this.shp_bb = shp_bb;
 	}
 
-	public int getShp_id() {
+	public Integer getShp_id() {
 		return shp_id;
 	}
 
-	public void setShp_id(int shp_id) {
+	public void setShp_id(Integer shp_id) {
 		this.shp_id = shp_id;
 	}
 

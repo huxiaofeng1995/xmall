@@ -5,9 +5,9 @@ import java.util.Date;
 
 public class T_MALL_SKU {
 
-	private int id;
-	private int shp_id;
-	private int kc;
+	private Integer id;
+	private Integer shp_id;
+	private Integer kc;
 	private BigDecimal jg;
 	private Date chjshj;
 	private String sku_mch;
@@ -30,27 +30,27 @@ public class T_MALL_SKU {
 		this.kcdz = kcdz;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getShp_id() {
+	public Integer getShp_id() {
 		return shp_id;
 	}
 
-	public void setShp_id(int shp_id) {
+	public void setShp_id(Integer shp_id) {
 		this.shp_id = shp_id;
 	}
 
-	public int getKc() {
+	public Integer getKc() {
 		return kc;
 	}
 
-	public void setKc(int kc) {
+	public void setKc(Integer kc) {
 		this.kc = kc;
 	}
 

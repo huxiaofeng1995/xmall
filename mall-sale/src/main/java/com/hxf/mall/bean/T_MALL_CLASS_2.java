@@ -2,15 +2,15 @@ package com.hxf.mall.bean;
 
 public class T_MALL_CLASS_2 {
 
-	private int id;
+	private Integer id;
 	private String flmch2;
-	private int flbh1;
+	private Integer flbh1;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -22,11 +22,11 @@ public class T_MALL_CLASS_2 {
 		this.flmch2 = flmch2;
 	}
 
-	public int getFlbh1() {
+	public Integer getFlbh1() {
 		return flbh1;
 	}
 
-	public void setFlbh1(int flbh1) {
+	public void setFlbh1(Integer flbh1) {
 		this.flbh1 = flbh1;
 	}
 
