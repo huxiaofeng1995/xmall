@@ -1,0 +1,17 @@
+<div class th:fragment="html">
+    <div style="margin: 0 auto;width: 1390px;">
+        所有分类 >
+        <div id="attrParam">
+            <a href="javascript:(0);" style="border:1px solid black;display: inline-block;height: 25px;margin-left:15px;" v-for="(value,index) in selected_value_list" :key="index">
+            <span style="height: 23px;line-height: 23px;padding-left: 5px;">{{value.shxzh}} {{value.shxzh_mch}}</span>
+            <i style="float:right;display:inline-block;height: 25px;width: 25px;background: url(/img/site/search.ele.png) no-repeat 7px -140px;" @click="removeValue(index)"></i>
+            </a>
+        </div>
+        <hr>
+        <div style="background: #f1f1f1;"><em style="font-size: 14px;font-weight: bold;font-style: normal;height: 30px;line-height: 30px;">商品筛选</em><span id="sku_count" style="font-size: 12px;font-family: Arial;margin-left: 30px;">共xxx件商品</span></div>
+        <div v-for="(attr,aindex) in list_attr" :key="aindex" style="height: 35px;line-height: 35px;border-bottom: 1px dotted grey;" v-if="attr.shfqy=='1'">
+            <div style="width: 110px;display: inline-block;"><span>{{attr.shxm_mch}}:</span></div>
+             <a v-for="val in attr.list_value" style="margin-left: 30px;" href="javascript:(0);" @click="get_list_by_attr(aindex,val)"> {{val.shxzh}} {{val.shxzh_mch}}</a>
+        </div>
+    </div>
+</div>

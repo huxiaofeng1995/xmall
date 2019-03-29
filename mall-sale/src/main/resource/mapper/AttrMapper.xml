@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hxf.mall.mapper.AttrMapper">
-	<resultMap id="attrList" type="com.hxf.mall.bean.OBJECT_T_MALL_ATTR" autoMapping="true">
+	<resultMap id="attrList" type="com.hxf.mall.model.OBJECT_T_MALL_ATTR" autoMapping="true">
 		<result column="a_id" property="id"/>
 		<collection property="list_value" ofType="com.hxf.mall.bean.T_MALL_VALUE" autoMapping="true">
 			<result column="b_id" property="id"/>
-
 		</collection>
 	</resultMap>
 

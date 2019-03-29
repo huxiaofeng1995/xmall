@@ -1,5 +1,7 @@
 package com.hxf.mall.bean;
 
+import com.hxf.mall.model.OBJECT_T_MALL_ATTR;
+
 import java.util.List;
 
 public class MODEL_T_MALL_ATTR {
