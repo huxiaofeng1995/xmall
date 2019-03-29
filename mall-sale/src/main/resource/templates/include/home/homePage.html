@@ -1,7 +1,3 @@
-<!-- 模仿天猫整站springboot 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
-
 <div th:fragment="html">
     <script>
         function showProductsAsideCategorys(cid){
@@ -80,7 +76,6 @@
                         var url =  this.class1_uri;
                         axios.get(url).then(function(response) {
                             vue.list_class1 = response.data;
-                            console.log(response.data)
                             vue.$nextTick(function(){
                                 //要等渲染结束之后，才来进行监听，否则他们都没有被创建出来，监听也没有意义呀
                                 homePageRegisterListeners();

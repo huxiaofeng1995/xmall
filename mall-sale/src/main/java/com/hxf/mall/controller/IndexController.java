@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +22,19 @@ public class IndexController {
 	@Autowired
 	private ListService listService;
 
-	@RequestMapping(value="/goto_login")
+	@GetMapping(value="/goto_login")
 	public String goto_login(){
 		return "login";
+	}
+
+	@GetMapping(value="/goto_register")
+	public String goto_registry(){
+		return "register";
+	}
+
+	@GetMapping(value="/registerSuccess")
+	public String registerSuccess(){
+		return "include/registerSuccessPage";
 	}
 
 	@GetMapping(value="/index")
@@ -31,7 +42,7 @@ public class IndexController {
 		return "home";
 	}
 
-	@RequestMapping(value="/goto_search_class")
+	@GetMapping(value="/goto_search_class")
 	public String goto_list(int flbh2,Map map){
 		map.put("flbh2",flbh2);
 		List<OBJECT_T_MALL_ATTR> list_attr = attrService.get_attr_list(flbh2);
@@ -41,5 +52,11 @@ public class IndexController {
 		map.put("list_sku",list_sku);
 		map.put("count",list_sku.size());
 		return "list";
+	}
+
+	@GetMapping("logout")
+	public String logout(HttpSession session){
+		session.invalidate();
+		return "redirect:index";
 	}
 }
