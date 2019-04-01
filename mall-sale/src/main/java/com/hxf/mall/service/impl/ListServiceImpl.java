@@ -2,6 +2,7 @@ package com.hxf.mall.service.impl;
 
 import com.hxf.mall.bean.OBJECT_T_MALL_SKU;
 import com.hxf.mall.bean.T_MALL_SKU_ATTR_VALUE;
+import com.hxf.mall.bean.T_MALL_VALUE;
 import com.hxf.mall.mapper.ListMapper;
 import com.hxf.mall.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,33 @@ public class ListServiceImpl implements ListService {
     }
 
     @Override
-    public List<OBJECT_T_MALL_SKU> get_sku_list_by_attr(List<T_MALL_SKU_ATTR_VALUE> list_attr, int flbh2) {
+    public List<OBJECT_T_MALL_SKU> get_sku_list_by_attr(List<T_MALL_VALUE> list_value, int flbh2) {
+        StringBuffer subSql = new StringBuffer("");
+        // 根据属性集合动态拼接条件过滤的sql语句
+        subSql.append(" and b.id in ( select sku_id from t_mall_sku_attr_value where shxzh_id in(");
+        if (list_value != null && list_value.size() > 0) {
+            for (int i = 0; i < list_value.size(); i++) {
+                subSql.append(list_value.get(i).getId());
+                if((i+1) < list_value.size()){
+                    subSql.append(",");
+                }else {
+                    subSql.append(") group by sku_id having count(sku_id)=" + list_value.size());
+                }
+            }
+        }
+        subSql.append(" ) ");
+        Map<String,Object> map = new HashMap<>();
+        map.put("flbh2",flbh2);
+        if(list_value.size() > 0) {
+            map.put("subSql", subSql);
+        }
+        System.out.println(subSql);
+        List<OBJECT_T_MALL_SKU> list = listMapper.select_list_sku_by_attr(map);
+        return list;
+    }
+
+    //旧方法，旧代码
+    public List<OBJECT_T_MALL_SKU> get_sku_list_by_attr1(List<T_MALL_SKU_ATTR_VALUE> list_attr, int flbh2) {
         StringBuffer subSql = new StringBuffer("");
         // 根据属性集合动态拼接条件过滤的sql语句
         subSql.append(" and b.id in ( select sku0.sku_id from ");

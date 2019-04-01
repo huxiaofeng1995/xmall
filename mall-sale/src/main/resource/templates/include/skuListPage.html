@@ -4,12 +4,12 @@
 		    var flbh2 = getUrlParms('flbh2');
 			var keyword = getUrlParms("keyword");
 	        var data4Vue = {
-	        		uri:'foresearch',
-	        		attr_uri: 'attr-list',
-	        		products:[],
-	        		list_attr: [],
-	        		selected_value_list: [],
-	        		selected_a_indexs: []
+                attr_uri: 'attr-list',
+                sku_list_uri: 'sku-list',
+                sku_list: null,
+                list_attr: [],
+                selected_value_list: [],
+                selected_a_indexs: []
 	        };
 	        //ViewModel
 	        var vue = new Vue({
@@ -17,13 +17,13 @@
 	            data: data4Vue,
 	            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
 	                this.getAttrList()
-	            	//this.load();
 	            },        
 	            methods: {
-	            	load:function(){
-	                    var url =  this.uri+"?keyword="+keyword;
-	                    axios.post(url).then(function(response) {
-	            	        vue.products = response.data;
+	            	list:function(){
+	                    var url =  this.sku_list_uri;
+	                    var params = {flbh2: flbh2,list_value: JSON.stringify(vue.selected_value_list)}
+	                    axios.get(url,{params: params}).then(function(response) {
+	            	        vue.sku_list = response.data.data;
 	                        vue.$nextTick(function(){
 	        	            	linkDefaultActions();
 	                        })
@@ -33,14 +33,16 @@
 	            	    var url = this.attr_uri + "/" + flbh2;
 	            	    axios.get(url).then(function(response) {
 	            	        vue.list_attr = response.data.data;
+	            	        vue.list();
 	            	        console.log(vue.list_attr);
 	            	    })
 	            	},
 	            	get_list_by_attr:function(aindex,val) {
-	            	  console.log(val);
-	            	  vue.list_attr[aindex].shfqy = '0'
-	            	  vue.selected_a_indexs.push(aindex)
-	            	  vue.selected_value_list.push(val)
+	            	    console.log(val);
+	            	    vue.list_attr[aindex].shfqy = '0'
+	            	    vue.selected_a_indexs.push(aindex)
+	            	    vue.selected_value_list.push(val)
+                        vue.list();
 	            	},
 	            	removeValue:function(index){
 	            	    vue.selected_value_list.splice(index,1)
@@ -53,10 +55,10 @@
 		})
 	</script>
 
-    <div th:replace="include/attrList::html" ></div>
-	<!--<div id="searchResult">
+	<div id="searchResult">
 		<div class="searchResultDiv">
+		    <div th:replace="include/attrList::html" ></div>
 			<div th:replace="include/skuList::html" ></div>
 		</div>
-	</div>-->
+	</div>
 </div>
