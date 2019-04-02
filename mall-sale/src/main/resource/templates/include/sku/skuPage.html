@@ -9,8 +9,7 @@
                 sale_attr: {},
                 selected_id:{cid:null,vid:null},
                 num: 1,
-                firstProductImage:null,
-                pvs:[],
+                sku_attr:null,
                 reviews:[],
                 showDetail:true,
                 showReview:false,
@@ -32,7 +31,8 @@
                             vue.sku = result.data.detail_sku;
                             vue.sale_attr = result.data.sale_attr;
                             vue.spu = result.data.detail_sku.spu;
-                            console.log(vue.sku)
+                            vue.sku_attr = result.data.detail_sku.list_av_name;
+                            console.log(vue.sku_attr)
                             vue.$nextTick(function(){
                                 imgAndInfoPageRegisterListeners(vue);
                             })
@@ -65,10 +65,12 @@
                               var isSkuExist = result.data.isSkuExist;
                               if(isSkuExist){
                                 vue.sku = result.data.detail_sku;
+                                vue.sku_attr = result.data.detail_sku.list_av_name;
                               }else {
                                   vue.sku.kc = 0;
                                   vue.sku.sku_xl = 0;
                                   vue.sku.sku_mch = vue.spu.shp_mch;
+                                  vue.sku_attr = []
                               }
                               vue.$nextTick(function(){
                                   imgAndInfoPageRegisterListeners(vue);
@@ -87,6 +89,6 @@
     <div class="productPageDiv">
         <div th:replace="include/sku/imgAndInfo::html" ></div>
         <!--<div th:replace="include/sku/productReview::html" ></div>-->
-        <!--<div th:replace="include/sku/skuDetail::html" ></div>-->
+        <div th:replace="include/sku/skuDetail::html" ></div>
     </div>
 </div>
