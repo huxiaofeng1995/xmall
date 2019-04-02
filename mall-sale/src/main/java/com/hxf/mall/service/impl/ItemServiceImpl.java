@@ -2,6 +2,8 @@ package com.hxf.mall.service.impl;
 
 import com.hxf.mall.bean.*;
 import com.hxf.mall.mapper.ItemMapper;
+import com.hxf.mall.model.DETAIL_T_MALL_SKU;
+import com.hxf.mall.model.OBJECT_T_MALL_PRODUCT;
 import com.hxf.mall.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

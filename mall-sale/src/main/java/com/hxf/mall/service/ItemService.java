@@ -1,7 +1,7 @@
 package com.hxf.mall.service;
 
-import com.hxf.mall.bean.DETAIL_T_MALL_SKU;
-import com.hxf.mall.bean.OBJECT_T_MALL_PRODUCT;
+import com.hxf.mall.model.DETAIL_T_MALL_SKU;
+import com.hxf.mall.model.OBJECT_T_MALL_PRODUCT;
 import com.hxf.mall.bean.T_MALL_PRODUCT_SKU_INFO;
 import com.hxf.mall.bean.T_MALL_SKU;
 

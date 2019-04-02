@@ -1,0 +1,92 @@
+<div th:fragment="html">
+    <script>
+        $(function(){
+            var sku_id = getUrlParms("sku_id");
+            var data4Vue = {
+                uri:'sku-detail',
+                sku: {},
+                spu: {},
+                sale_attr: {},
+                selected_id:{cid:null,vid:null},
+                num: 1,
+                firstProductImage:null,
+                pvs:[],
+                reviews:[],
+                showDetail:true,
+                showReview:false,
+                user:{yh_mch:'', yh_mm:''}
+            };
+            //ViewModel
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                    linkDefaultActions();
+                    this.load();
+                },
+                methods: {
+                    load:function(){
+                        var url =  this.uri+"/" + sku_id;
+                        axios.get(url).then(function(response) {
+                            var result = response.data;
+                            vue.sku = result.data.detail_sku;
+                            vue.sale_attr = result.data.sale_attr;
+                            vue.spu = result.data.detail_sku.spu;
+                            console.log(vue.sku)
+                            vue.$nextTick(function(){
+                                imgAndInfoPageRegisterListeners(vue);
+                            })
+                        });
+
+                    },
+                    toggle2Detail:function(){
+                        this.showDetail=true;
+                        this.showReview=false;
+                    },
+                    toggle2Review:function(){
+                        this.showDetail=false;
+                        this.showReview=true;
+                    },
+                    selectColor:function(cid){
+                        vue.selected_id.cid = cid;
+                        vue.refreshSku();
+                    },
+                    selectVersion:function(vid){
+                        vue.selected_id.vid = vid;
+                        vue.refreshSku();
+                    },
+                    refreshSku:function(){
+                        var cid = vue.selected_id.cid;
+                        var vid = vue.selected_id.vid
+                        if(cid != null && vid != null){
+                            var url = "sku/cid/" + cid +"/vid/" + vid;
+                            axios.get(url).then(function(response) {
+                              var result = response.data;
+                              var isSkuExist = result.data.isSkuExist;
+                              if(isSkuExist){
+                                vue.sku = result.data.detail_sku;
+                              }else {
+                                  vue.sku.kc = 0;
+                                  vue.sku.sku_xl = 0;
+                                  vue.sku.sku_mch = vue.spu.shp_mch;
+                              }
+                              vue.$nextTick(function(){
+                                  imgAndInfoPageRegisterListeners(vue);
+                              })
+                            });
+                        }
+                    }
+                }
+            });
+
+
+        });
+    </script>
+
+    <title>模仿天猫官网 -- {{sku.sku_mch}}</title>
+    <div class="productPageDiv">
+        <div th:replace="include/sku/imgAndInfo::html" ></div>
+        <!--<div th:replace="include/sku/productReview::html" ></div>-->
+        <!--<div th:replace="include/sku/skuDetail::html" ></div>-->
+    </div>
+</div>

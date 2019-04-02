@@ -1,4 +1,8 @@
-package com.hxf.mall.bean;
+package com.hxf.mall.model;
+
+import com.hxf.mall.bean.T_MALL_PRODUCT;
+import com.hxf.mall.bean.T_MALL_SKU;
+import com.hxf.mall.bean.T_MALL_TRADE_MARK;
 
 public class OBJECT_T_MALL_SKU extends T_MALL_SKU {
     private T_MALL_PRODUCT spu;

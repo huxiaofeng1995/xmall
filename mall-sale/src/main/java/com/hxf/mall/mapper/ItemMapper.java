@@ -1,6 +1,7 @@
 package com.hxf.mall.mapper;
 
 import com.hxf.mall.bean.*;
+import com.hxf.mall.model.DETAIL_T_MALL_SKU;
 
 import java.util.List;
 import java.util.Map;

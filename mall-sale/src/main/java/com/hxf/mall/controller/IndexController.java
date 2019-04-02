@@ -38,14 +38,7 @@ public class IndexController {
 	}
 
 	@GetMapping(value="/goto_search_class")
-	public String goto_list(int flbh2,Map map){
-//		map.put("flbh2",flbh2);
-//		List<OBJECT_T_MALL_ATTR> list_attr = attrService.get_attr_list(flbh2);
-//		map.put("list_attr",list_attr);
-//
-//		List<OBJECT_T_MALL_SKU> list_sku =listService.get_sku_list(flbh2);
-//		map.put("list_sku",list_sku);
-//		map.put("count",list_sku.size());
+	public String goto_list(){
 		return "list";
 	}
 
@@ -53,5 +46,10 @@ public class IndexController {
 	public String logout(HttpSession session){
 		session.invalidate();
 		return "redirect:index";
+	}
+
+	@GetMapping("goto_sku_detail")
+	public String goto_detail(){
+		return "detail";
 	}
 }

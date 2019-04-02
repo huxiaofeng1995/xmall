@@ -1,6 +1,6 @@
 package com.hxf.mall.service.impl;
 
-import com.hxf.mall.bean.OBJECT_T_MALL_SKU;
+import com.hxf.mall.model.OBJECT_T_MALL_SKU;
 import com.hxf.mall.bean.T_MALL_SKU_ATTR_VALUE;
 import com.hxf.mall.bean.T_MALL_VALUE;
 import com.hxf.mall.mapper.ListMapper;

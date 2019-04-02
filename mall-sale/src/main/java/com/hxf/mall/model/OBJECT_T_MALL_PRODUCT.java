@@ -1,4 +1,8 @@
-package com.hxf.mall.bean;
+package com.hxf.mall.model;
+
+import com.hxf.mall.bean.T_MALL_PRODUCT;
+import com.hxf.mall.bean.T_MALL_PRODUCT_COLOR;
+import com.hxf.mall.bean.T_MALL_PRODUCT_VERSION;
 
 import java.util.List;
 

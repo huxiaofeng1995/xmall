@@ -1,41 +1,48 @@
 package com.hxf.mall.controller;
 
-import com.hxf.mall.bean.DETAIL_T_MALL_SKU;
-import com.hxf.mall.bean.OBJECT_T_MALL_PRODUCT;
+import com.hxf.mall.model.DETAIL_T_MALL_SKU;
+import com.hxf.mall.model.OBJECT_T_MALL_PRODUCT;
 import com.hxf.mall.bean.T_MALL_PRODUCT_SKU_INFO;
 import com.hxf.mall.bean.T_MALL_SKU;
 import com.hxf.mall.service.ItemService;
+import com.hxf.mall.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 public class ItemController {
 
     @Autowired
     private ItemService itemService;
 
-    @RequestMapping("/goto_sku_detail")
-    public String goto_sku_detail(int sku_id, int spu_id, Map map){
-        DETAIL_T_MALL_SKU detail_sku = itemService.get_sku_detail(sku_id);
-        List<T_MALL_SKU> list_sku = itemService.get_list_sku_by_spu(spu_id);
-        OBJECT_T_MALL_PRODUCT obj_spu = itemService.get_spu_sale_attr(spu_id);
+    @GetMapping("/sku-detail/{id}")
+    public Result goto_sku_detail(@PathVariable Integer id){
+        Map<String,Object> map = new HashMap<>();
+        DETAIL_T_MALL_SKU detail_sku = itemService.get_sku_detail(id);
+        Integer spu_id = detail_sku.getSpu().getId();
+        OBJECT_T_MALL_PRODUCT obj_spu = itemService.get_spu_sale_attr(spu_id);//获取商品销售属性
         map.put("detail_sku",detail_sku);
-        map.put("list_sku",list_sku);
-        map.put("obj_spu",obj_spu);
-        return "skuDetail";
+        map.put("sale_attr",obj_spu);
+        return Result.success(map);
     }
-    @RequestMapping("get_skuId")
-    @ResponseBody
-    public int get_sku_id(int color_id, int version_id){
-        T_MALL_PRODUCT_SKU_INFO item = itemService.get_sku_id(color_id,version_id);
+
+
+    @GetMapping("sku/cid/{cid}/vid/{vid}")
+    public Result getSkuByColorAndVersion(@PathVariable Integer cid, @PathVariable Integer vid){
+        Map<String,Object> map = new HashMap<>();
+        T_MALL_PRODUCT_SKU_INFO item = itemService.get_sku_id(cid,vid);
         if(item != null){
-            return item.getSku_id();
+            DETAIL_T_MALL_SKU detail_sku = itemService.get_sku_detail(item.getSku_id());
+            map.put("detail_sku", detail_sku);
+            map.put("isSkuExist", 1);
+        }else {
+            map.put("isSkuExist", 0);
         }
-        return -1;
+        return Result.success(map);
     }
 }

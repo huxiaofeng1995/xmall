@@ -1,9 +1,7 @@
 package com.hxf.mall.service;
 
-import com.hxf.mall.bean.OBJECT_T_MALL_SKU;
-import com.hxf.mall.bean.T_MALL_SKU_ATTR_VALUE;
+import com.hxf.mall.model.OBJECT_T_MALL_SKU;
 import com.hxf.mall.bean.T_MALL_VALUE;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

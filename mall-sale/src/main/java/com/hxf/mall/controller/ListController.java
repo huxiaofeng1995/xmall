@@ -1,19 +1,13 @@
 package com.hxf.mall.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.hxf.mall.bean.OBJECT_T_MALL_SKU;
 import com.hxf.mall.bean.T_MALL_VALUE;
 import com.hxf.mall.service.ListService;
 import com.hxf.mall.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class ListController {

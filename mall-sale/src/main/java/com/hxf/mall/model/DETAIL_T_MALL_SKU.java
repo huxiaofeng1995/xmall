@@ -1,4 +1,8 @@
-package com.hxf.mall.bean;
+package com.hxf.mall.model;
+
+import com.hxf.mall.bean.T_MALL_PRODUCT;
+import com.hxf.mall.bean.T_MALL_PRODUCT_IMAGE;
+import com.hxf.mall.bean.T_MALL_SKU;
 
 import java.util.List;
 

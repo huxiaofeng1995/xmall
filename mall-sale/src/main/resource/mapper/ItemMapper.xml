@@ -32,7 +32,7 @@
 
 	</select>
 
-	<resultMap id="select_detail_sku_map" type="com.hxf.mall.bean.DETAIL_T_MALL_SKU" autoMapping="true">
+	<resultMap id="select_detail_sku_map" type="com.hxf.mall.model.DETAIL_T_MALL_SKU" autoMapping="true">
 		<id property="id" column="sku_id"></id>
 		<association property="spu" javaType="com.hxf.mall.bean.T_MALL_PRODUCT" autoMapping="true">
 			<id column="spu_id" property="id"></id>
@@ -40,7 +40,7 @@
 		<collection property="list_image" ofType="com.hxf.mall.bean.T_MALL_PRODUCT_IMAGE" autoMapping="true">
 			<id property="id" column="img_id"></id>
 		</collection>
-		<collection property="list_av_name" ofType="com.hxf.mall.bean.OBJECT_AV_NAME" autoMapping="true">
+		<collection property="list_av_name" ofType="com.hxf.mall.model.OBJECT_AV_NAME" autoMapping="true">
 		</collection>
 	</resultMap>
 

@@ -1,4 +1,4 @@
-package com.hxf.mall.bean;
+package com.hxf.mall.model;
 
 public class OBJECT_AV_NAME {
 

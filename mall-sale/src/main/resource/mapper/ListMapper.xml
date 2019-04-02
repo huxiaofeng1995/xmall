@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hxf.mall.mapper.ListMapper">
-	<resultMap id="skuList" type="com.hxf.mall.bean.OBJECT_T_MALL_SKU" autoMapping="true">
+	<resultMap id="skuList" type="com.hxf.mall.model.OBJECT_T_MALL_SKU" autoMapping="true">
 		<result column="b_id" property="id"/>
 		<association property="spu" javaType="com.hxf.mall.bean.T_MALL_PRODUCT" autoMapping="true">
 			<result column="a_id" property="id" />
