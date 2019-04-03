@@ -1,10 +1,13 @@
 package com.hxf.mall.controller;
 
+import com.hxf.mall.bean.T_MALL_SHOPPINGCAR;
 import com.hxf.mall.service.AttrService;
+import com.hxf.mall.service.CartService;
 import com.hxf.mall.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -16,6 +19,9 @@ public class IndexController {
 
 	@Autowired
 	private ListService listService;
+
+	@Autowired
+	private CartService cartService;
 
 	@GetMapping(value="/goto_login")
 	public String goto_login(){
@@ -51,5 +57,10 @@ public class IndexController {
 	@GetMapping("goto_sku_detail")
 	public String goto_detail(){
 		return "detail";
+	}
+
+	@GetMapping(value="/cartSuccess")
+	public String cartSuccess(){
+		return "cartSuccess";
 	}
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxf.mall.mapper.CartMapper">
+
+	<select id="select_cart" resultType="com.hxf.mall.bean.T_MALL_SHOPPINGCAR">
+		SELECT * FROM t_mall_shoppingcart WHERE id=#{id}
+	</select>
+
+	<insert id="insert_cart" parameterType="com.hxf.mall.bean.T_MALL_SHOPPINGCAR" useGeneratedKeys="true" keyColumn="id"
+			keyProperty="id">
+		INSERT INTO t_mall_shoppingcar
+		(sku_mch,sku_jg,tjshl,hj,yh_id,shp_id,sku_id,shp_tp,kcdz)
+		VALUES
+		(#{sku_mch},#{sku_jg},#{tjshl},#{hj},#{yh_id},#{shp_id},#{sku_id},#{shp_tp},#{kcdz})
+	</insert>
+</mapper>

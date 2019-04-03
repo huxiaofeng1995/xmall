@@ -2,58 +2,6 @@
 
 <script> 
 function imgAndInfoPageRegisterListeners(vue){
-    var stock = vue.sku.kc;
-    $(".productNumberSetting").keyup(function(){
-        var num= $(".productNumberSetting").val();
-        num = parseInt(num);
-        if(isNaN(num))
-            num= 1;
-        if(num<=0)
-            num = 1;
-        if(num>stock)
-            num = stock;
-        $(".productNumberSetting").val(num);
-    });
-     
-    $(".increaseNumber").click(function(){
-        var num= $(".productNumberSetting").val();
-        num++;
-        if(num>stock)
-            num = stock;
-        $(".productNumberSetting").val(num);
-    });
-    $(".decreaseNumber").click(function(){
-        var num= $(".productNumberSetting").val();
-        --num;
-        if(num<=0)
-            num=1;
-        $(".productNumberSetting").val(num);
-    });
-     
-    $(".addCartButton").removeAttr("disabled");
-    $(".addCartLink").click(function(){
-        var url = "forecheckLogin";
-        axios.get(url).then(function(response) {
-            if(0==response.data.code){
-                var pid = vue.p.id;
-                var num= $(".productNumberSetting").val();
-                var url =  "foreaddCart?pid="+pid+"&num="+num;
-	            axios.get(url).then(function(response) {
-		        	var result = response.data;
-	                if(0==result.code){
-	                    $(".addCartButton").html("已加入购物车");
-	                    $(".addCartButton").attr("disabled","disabled");
-	                    $(".addCartButton").css("background-color","lightgray")
-	                    $(".addCartButton").css("border-color","lightgray")
-	                    $(".addCartButton").css("color","black")
-	                }
-				});	
-            }
-            else{
-                $("#loginModal").modal('show');                     
-            }        	
-        });
-    });
     $(".buyLink").click(function(){
         var url = "forecheckLogin";
         axios.get(url).then(function(response) {
@@ -177,8 +125,8 @@ function imgAndInfoPageRegisterListeners(vue){
 	            <div>销量 <span class="redColor boldWord"> {{ sku.sku_xl }}</span></div>
 	            <div>累计评价 <span class="redColor boldWord"> 100</span></div>    <!--评价功能后期再实现-->
 	        </div>
-	        <div style="display: block;height: 130px">
-                <div class="colorItem" style="height: 30px;display: block;margin-top: 5px">
+	        <div style="display: block;height: 160px" :style="errSubmit?'border:2px solid red;':'border:none'">
+                <div class="colorItem" style="height: 30px;display: block;margin-top: 10px">
                     <div class="min_t" style="float: left;font-size: 12px;line-height: 26px">颜色：</div>
                      <div v-for="color in sale_attr.list_color"  style="float: left;padding: 0 5px;margin: 0 5px 5px;font-size: 12px;" :style="selected_id.cid==color.id?'border:2px solid green;':'border:2px solid #ccc;'">
                         <a href="javascript:;" @click="selectColor(color.id)">{{color.shp_ys}}</a>
@@ -196,19 +144,19 @@ function imgAndInfoPageRegisterListeners(vue){
                     <span>数量</span>
                     <span style="margin-left: 15px">
                         <span class="productNumberSettingSpan">
-                        <input class="productNumberSetting" type="text" value="1" v-model="num">
+                        <input class="productNumberSetting" type="text" v-model="num" @keyup="changeNum">
                         </span>
                         <span class="arrow">
-                            <a href="#nowhere" class="increaseNumber">
+                            <a href="#nowhere" class="increaseNumber"  @click="increNum">
                             <span class="updown">
                                     <img src="img/site/increase.png">
                             </span>
                             </a>
 
                             <span class="updownMiddle"> </span>
-                            <a href="#nowhere"  class="decreaseNumber">
+                            <a href="#nowhere"  class="decreaseNumber" @click="decreNum">
                             <span class="updown">
-                                    <img src="img/site/decrease.png">
+                                    <img src="img/site/decrease.png" >
                             </span>
                             </a>
 
@@ -217,6 +165,8 @@ function imgAndInfoPageRegisterListeners(vue){
                     件</span>
                     <span>库存{{sku.kc}}件</span>
                 </div>
+
+                <div style="margin: 10px auto"><span v-show="errSubmit" style="color: red">{{errMsg}}</span></div>
 	        </div>
 	        <div class="serviceCommitment">
 	            <span class="serviceCommitmentDesc">服务承诺</span>
@@ -230,7 +180,7 @@ function imgAndInfoPageRegisterListeners(vue){
 	         
 	        <div class="buyDiv">
 	            <a class="buyLink" ><button class="buyButton" >立即购买</button></a>
-	            <a href="#nowhere" class="addCartLink"><button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button></a>
+	            <a href="javascript:void(0) " class="addCartLink" @click="addCart"><button class="addCartButton"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button></a>
 	        </div>
 	    </div>
 	     

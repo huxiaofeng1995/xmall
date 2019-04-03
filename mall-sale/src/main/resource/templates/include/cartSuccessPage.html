@@ -1,0 +1,26 @@
+<div th:fragment="html">
+    <div class="cartSuccessDiv" style="height: 180px">
+        <div style="display: block; height: 40px">
+        <img src="img/site/registerSuccess.png">
+        该商品已加入购物车
+        </div>
+        <div class="lec">
+            <a th:href="'goto_sku_detail?sku_id='+ ${session.cart.sku_id}"><img th:src="${session.cart.shp_tp}" style="display:inline-block;border: 2px solid gray;padding: 2px" width="62px" height="62px"/></a>
+        </div>
+        <div style="float: left">
+                <span class="lec_name">
+                    [[${session.cart.sku_mch}]]
+                </span>
+                <span class="lec_des">
+                    数量 [[${session.cart.tjshl}]]
+                </span>
+         </div>
+        <div class="shop_des">
+            <a th:href="'goto_sku_detail?sku_id='+${session.cart.sku_id}"><img src="img/site/shop_des.png"/></a>
+        </div>
+        <div class="shop_cart">
+            <a href="goto_cart_list"><img src="img/site/shop_cart.png"/></a>
+        </div>
+    </div>
+
+</div>
