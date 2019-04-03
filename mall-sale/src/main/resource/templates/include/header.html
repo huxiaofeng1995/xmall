@@ -82,6 +82,26 @@
             });
         }
 
+        //跳转函数
+        function jump(page,vue){
+            if('first'== page && !vue.pagination.isFirstPage)
+                vue.list(1);
+
+            else if('pre'== page &&	vue.pagination.hasPreviousPage )
+                vue.list(vue.pagination.pageNum-1);
+
+            else if('next'== page && vue.pagination.hasNextPage)
+                vue.list(vue.pagination.pageNum+1);
+
+            else if('last'== page && !vue.pagination.isLastPage)
+                vue.list(vue.pagination.pages);
+        }
+        //跳转函数
+        function jumpByNumber(start,vue){
+            if(start!=vue.pagination.pageNum)
+                vue.list(start);
+        }
+
         Vue.filter("subStringFilter", function(value, start, end){
             if (!value)
                 return '';

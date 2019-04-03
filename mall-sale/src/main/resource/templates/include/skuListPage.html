@@ -2,38 +2,47 @@
 	<script>
 		$(function(){
 		    var flbh2 = getUrlParms('flbh2');
-			var keyword = getUrlParms("keyword");
+		    var sort = getUrlParms('sort');
 	        var data4Vue = {
                 attr_uri: 'attr-list',
                 sku_list_uri: 'sku-list',
                 sku_list: null,
                 list_attr: [],
                 selected_value_list: [],
-                selected_a_indexs: []
+                selected_a_indexs: [],
+                count: null,
+                flbh2: null,
+                sort: null,
+                pagination:{}
 	        };
 	        //ViewModel
 	        var vue = new Vue({
 	            el: '#workingArea',
 	            data: data4Vue,
 	            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
-	                this.getAttrList()
-	            },        
+	                this.getAttrList();
+
+	            },
 	            methods: {
-	            	list:function(){
+	            	list:function(pageNum){
 	                    var url =  this.sku_list_uri;
-	                    var params = {flbh2: flbh2,list_value: JSON.stringify(vue.selected_value_list)}
+	                    var params = {flbh2: flbh2,list_value: JSON.stringify(vue.selected_value_list),pageNum: pageNum, sort: sort}
 	                    axios.get(url,{params: params}).then(function(response) {
-	            	        vue.sku_list = response.data.data;
+	                        vue.pagination = response.data.data;
+	            	        vue.sku_list = vue.pagination.list;
+	            	        vue.count = vue.pagination.total
 	                        vue.$nextTick(function(){
 	        	            	linkDefaultActions();
 	                        })
+                            vue.flbh2 = flbh2;
+	            	        vue.sort = sort;
 	                    });
 	            	},
 	            	getAttrList:function() {
 	            	    var url = this.attr_uri + "/" + flbh2;
 	            	    axios.get(url).then(function(response) {
 	            	        vue.list_attr = response.data.data;
-	            	        vue.list();
+	            	        vue.list(1);
 	            	        console.log(vue.list_attr);
 	            	    })
 	            	},
@@ -42,14 +51,20 @@
 	            	    vue.list_attr[aindex].shfqy = '0'
 	            	    vue.selected_a_indexs.push(aindex)
 	            	    vue.selected_value_list.push(val)
-                        vue.list();
+                        vue.list(1);
 	            	},
 	            	removeValue:function(index){
 	            	    vue.selected_value_list.splice(index,1)
 	            	    var aindex = vue.selected_a_indexs[index]
 	            	    vue.list_attr[aindex].shfqy = '1'
 	            	    vue.selected_a_indexs.splice(index,1)
-	            	}
+	            	},
+	            	jump: function(page){
+                        jump(page,vue); //定义在header.html 中
+                    },
+                    jumpByNumber: function(start){
+                        jumpByNumber(start,vue);
+                    }
 	            }
 	        });       			
 		})
@@ -58,7 +73,9 @@
 	<div id="searchResult">
 		<div class="searchResultDiv">
 		    <div th:replace="include/attrList::html" ></div>
+		    <div th:replace="include/sortBar::html" ></div>
 			<div th:replace="include/skuList::html" ></div>
+			<div th:replace="include/page::html" ></div>
 		</div>
 	</div>
 </div>
