@@ -13,4 +13,31 @@
 		VALUES
 		(#{sku_mch},#{sku_jg},#{tjshl},#{hj},#{yh_id},#{shp_id},#{sku_id},#{shp_tp},#{kcdz})
 	</insert>
+
+	<select id="select_cart_by_uid" parameterType="com.hxf.mall.bean.T_MALL_USER_ACCOUNT" resultType="com.hxf.mall.bean.T_MALL_SHOPPINGCAR">
+		SELECT * FROM t_mall_shoppingcart WHERE yh_id=#{id}
+	</select>
+
+	<select id="select_cart_by_skuId" parameterType="com.hxf.mall.bean.T_MALL_USER_ACCOUNT" resultType="com.hxf.mall.bean.T_MALL_SHOPPINGCAR">
+		SELECT * FROM t_mall_shoppingcart WHERE sku_id=#{sku_id} and yh_id=#{yh_id}
+	</select>
+
+	<update id="update_cart" parameterType="com.agree.bean.T_MALL_SHOPPINGCAR">
+		UPDATE t_mall_shoppingcar
+		<set>
+			<if test="tjshl!=0">
+				tjshl = #{tjshl},
+			</if>
+			<if test="hj!=0">
+				hj = #{hj},
+			</if>
+			<if test="shfxz!=null and shfxz!=''">
+				shfxz = #{shfxz},
+			</if>
+		</set>
+		where sku_id = #{sku_id}
+		<if test="yh_id!=0">
+			and yh_id = #{yh_id}
+		</if>
+	</update>
 </mapper>
