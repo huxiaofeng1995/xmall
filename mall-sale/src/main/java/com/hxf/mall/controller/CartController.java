@@ -6,10 +6,7 @@ import com.hxf.mall.bean.T_MALL_USER_ACCOUNT;
 import com.hxf.mall.service.CartService;
 import com.hxf.mall.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.Cookie;
@@ -95,6 +92,13 @@ public class CartController {
                 }
             }
         }
+        Integer cartCount = 0;
+//        for(int i = 0;i < list_cart.size();i++){
+//            T_MALL_SHOPPINGCAR c = list_cart.get(i);
+//            cartCount += c.getTjshl();
+//            //sum = sum.add(new BigDecimal(cart.getHj() + ""));
+//        }
+        session.setAttribute("cartCount",list_cart.size());
         return Result.success();
     }
 
@@ -107,5 +111,27 @@ public class CartController {
             }
         }
         return flag;
+    }
+
+    @GetMapping("cartCount")
+    public Result getCartCount(@CookieValue(value = "list_cart_cookie",required = false) String list_cart_cookie, HttpSession session){
+        List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+        T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
+
+        if(user == null){
+            //从cookie中获取
+            if(!StringUtils.isBlank(list_cart_cookie)){
+                try {
+                    list_cart_cookie = URLDecoder.decode(list_cart_cookie , "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                list_cart = JSON.parseArray(list_cart_cookie,T_MALL_SHOPPINGCAR.class);
+            }
+        }else {
+            list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");
+        }
+        session.setAttribute("cartCount",list_cart.size());
+        return Result.success();
     }
 }

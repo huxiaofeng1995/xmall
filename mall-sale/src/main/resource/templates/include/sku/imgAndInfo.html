@@ -125,14 +125,14 @@ function imgAndInfoPageRegisterListeners(vue){
 	            <div>销量 <span class="redColor boldWord"> {{ sku.sku_xl }}</span></div>
 	            <div>累计评价 <span class="redColor boldWord"> 100</span></div>    <!--评价功能后期再实现-->
 	        </div>
-	        <div style="display: block;height: 160px" :style="errSubmit?'border:2px solid red;':'border:none'">
-                <div class="colorItem" style="height: 30px;display: block;margin-top: 10px">
+	        <div style="display: block;" :style="errSubmit?'border:2px solid red;':'border:none'">
+                <div class="colorItem" style="height: 30px;display: block;margin-top: 10px" v-if="sale_attr.list_color && sale_attr.list_color.length>0">
                     <div class="min_t" style="float: left;font-size: 12px;line-height: 26px">颜色：</div>
                      <div v-for="color in sale_attr.list_color"  style="float: left;padding: 0 5px;margin: 0 5px 5px;font-size: 12px;" :style="selected_id.cid==color.id?'border:2px solid green;':'border:2px solid #ccc;'">
                         <a href="javascript:;" @click="selectColor(color.id)">{{color.shp_ys}}</a>
                       </div>
                 </div>
-                <div class="versionItem" style="height: 30px;display: block;margin-top: 5px">
+                <div class="versionItem" style="height: 30px;display: block;margin-top: 5px" v-if="sale_attr.list_version && sale_attr.list_version.length>0">
                     <div class="min_t" style="float: left;font-size: 12px;line-height: 26px">版本：</div>
                      <div v-for="version in sale_attr.list_version" style="float: left;padding: 0 5px;margin: 0 5px 5px;font-size: 12px;" :style="selected_id.vid==version.id?'border:2px solid green;':'border:2px solid #ccc;'">
                         <a href="javascript:;" @click="selectVersion(version.id)" >{{version.shp_bb}}</a>

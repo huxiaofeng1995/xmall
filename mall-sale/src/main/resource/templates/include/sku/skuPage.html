@@ -83,10 +83,26 @@
                         var vid = vue.selected_id.vid;
                         var num = vue.num;
                         var kc = vue.sku.kc;
-                        if(cid == null || vid == null || num == 0){
+                        if(vue.sale_attr.list_color && vue.sale_attr.list_color.length>0){
+                            if(cid == null){
+                                vue.errSubmit = true;
+                                vue.errMsg = "请选择你想要的商品";
+                                return;
+                            }
+                        }
+                        if(vue.sale_attr.list_version && vue.sale_attr.list_version.length>0){
+                            if(vid == null){
+                                vue.errSubmit = true;
+                                vue.errMsg = "请选择你想要的商品";
+                                return;
+                            }
+                        }
+                        if(num == 0){
                             vue.errSubmit = true;
                             vue.errMsg = "请选择你想要的商品";
-                        }else if(kc == 0){
+                            return;
+                        }
+                        if(kc == 0){
                             vue.errSubmit = true;
                             vue.errMsg = "opps!该商品卖完啦!";
                         }else if(num > kc){

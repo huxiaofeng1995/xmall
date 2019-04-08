@@ -15,14 +15,14 @@
 	</insert>
 
 	<select id="select_cart_by_uid" parameterType="com.hxf.mall.bean.T_MALL_USER_ACCOUNT" resultType="com.hxf.mall.bean.T_MALL_SHOPPINGCAR">
-		SELECT * FROM t_mall_shoppingcart WHERE yh_id=#{id}
+		SELECT * FROM t_mall_shoppingcar WHERE yh_id=#{id}
 	</select>
 
 	<select id="select_cart_by_skuId" parameterType="com.hxf.mall.bean.T_MALL_USER_ACCOUNT" resultType="com.hxf.mall.bean.T_MALL_SHOPPINGCAR">
-		SELECT * FROM t_mall_shoppingcart WHERE sku_id=#{sku_id} and yh_id=#{yh_id}
+		SELECT * FROM t_mall_shoppingcar WHERE sku_id=#{sku_id} and yh_id=#{yh_id}
 	</select>
 
-	<update id="update_cart" parameterType="com.agree.bean.T_MALL_SHOPPINGCAR">
+	<update id="update_cart" parameterType="com.hxf.mall.bean.T_MALL_SHOPPINGCAR">
 		UPDATE t_mall_shoppingcar
 		<set>
 			<if test="tjshl!=0">

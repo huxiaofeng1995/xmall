@@ -32,10 +32,10 @@ public class UserController {
     private CartService cartService;
 
     @PostMapping(value="/login")
-    public Result login(@RequestBody T_MALL_USER_ACCOUNT user, HttpSession session, HttpServletResponse response, @CookieValue(value = "list_cart_cookie",required = false) String list_cart_cookie){
+    public Result login(@RequestBody T_MALL_USER_ACCOUNT user, HttpSession session, HttpServletResponse response, @CookieValue(value = "list_cart_cookie",required = false,defaultValue = "") String list_cart_cookie){
         //查询数据库登录
         //省略了
-
+        user.setId(1);
         session.setAttribute("user",user);
         Cookie cookie = null;
         try {
@@ -84,7 +84,9 @@ public class UserController {
 
         }
         //同步session,清空cookie
-        session.setAttribute("list_cart_session", cartService.get_cart_list_by_user(user));
+        list_cart = cartService.get_cart_list_by_user(user);
+        session.setAttribute("list_cart_session", list_cart);
+        session.setAttribute("cartCount",list_cart.size());
         response.addCookie(new Cookie("list_cart_cookie",""));
     }
 
