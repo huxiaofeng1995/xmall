@@ -63,4 +63,9 @@ public class IndexController {
 	public String cartSuccess(){
 		return "cartSuccess";
 	}
+
+	@GetMapping("goto_cart")
+	public String goto_cart(){
+		return "cart";
+	}
 }

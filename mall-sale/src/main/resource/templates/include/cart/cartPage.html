@@ -1,0 +1,123 @@
+<div th:fragment="html">
+    <script>
+        $(function(){
+            var data4Vue = {
+                uri:'carts',
+                list_cart: null,
+                sale_attr_list : null,
+                sum: null
+            };
+            //ViewModel
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                mounted:function(){
+                    this.load();
+                },
+                methods: {
+                    load:function(){
+                        var url =  this.uri;
+                        axios.get(url).then(function(response) {
+                            var result = response.data;
+                            vue.list_cart = result.data.list_cart;
+                            vue.sale_attr_list = result.data.sale_attr_list;
+                            vue.sum = result.data.sum;
+                        });
+                    },
+                    change_cart:function(cart){
+
+                    },
+                    del_cart:function(id) {
+
+                    }
+                }
+            });
+
+        })
+    </script>
+
+    <div class="cartDiv">
+        <div class="cartProductList">
+            <table class="cartProductTable">
+                <thead>
+                    <tr>
+                        <th class="selectAndImage">
+                                <img selectit="false" class="selectAllItem" src="img/site/cartNotSelected.png">
+                        全选
+
+                        </th>
+                        <th>商品信息</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th width="120px">金额</th>
+                        <th class="operation">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr  class="cartProductItemTR" v-for="cart,index in list_cart">
+                            <td>
+                                <input type="checkbox" v-model="cart.shfxz" @click="change_cart(cart)">
+                                <img class="cartProductImg"  :src="cart.shp_tp">
+                            </td>
+                            <td>
+                                <div class="cartProductLinkOutDiv">
+                                    <a :href="'goto_sku_detail?sku_id='+cart.sku_id" class="cartProductLink">{{cart.sku_mch}}</a>
+                                    <div v-if="sale_attr_list[index]">
+                                         <span style='color:#ccc'>颜色：{{sale_attr_list[index].color.shp_ys}}</span><br>
+                                         <span style='color:#ccc'>尺码：{{sale_attr_list[index].version.shp_bb}}</span>
+                                    </div>
+                                    <div v-else>
+                                         <!--<span style='color:#ccc'>颜色：无</span><br>
+                                         <span style='color:#ccc'>尺码：无</span>-->
+                                    </div>
+                                    <div class="cartProductLinkInnerDiv">
+                                        <img src="img/site/creditcard.png" title="支持信用卡支付">
+                                        <img src="img/site/7day.png" title="消费者保障服务,承诺7天退货">
+                                        <img src="img/site/promise.png" title="消费者保障服务,承诺如实描述">
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td>
+                                <span class="cartProductItemOringalPrice">￥{{cart.sku_jg|formatMoneyFilter}}</span>
+                                <span  class="cartProductItemPromotionPrice">￥{{cart.sku_jg|formatMoneyFilter}}</span>
+
+                            </td>
+                            <td>
+
+                                <div class="cartProductChangeNumberDiv">
+                                    <a  class="numberMinus" href="#nowhere">-</a>
+                                    <input   class="orderItemNumberSetting" autocomplete="off" :value="cart.tjshl">
+                                    <a  class="numberPlus" href="#nowhere">+</a>
+                                </div>
+
+                             </td>
+                            <td >
+                                <span class="cartProductItemSmallSumPrice"   >
+                                    ￥ {{cart.hj|formatMoneyFilter}}
+                                </span>
+
+                            </td>
+                            <td>
+                                <a class="deleteOrderItem"   href="#nowhere">删除</a>
+                            </td>
+                        </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="cartFoot">
+
+            <div class="pull-right">
+                <span>已选商品 <span class="cartSumNumber" >[[${session.cartCount}]]</span> 件</span>
+
+                <span>合计 (不含运费): </span>
+                <span class="cartSumPrice" >￥{{sum}}</span>
+                <button class="createOrderButton" disabled="disabled" >结  算</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

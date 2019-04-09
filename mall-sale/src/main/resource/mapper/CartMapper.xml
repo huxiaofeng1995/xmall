@@ -40,4 +40,27 @@
 			and yh_id = #{yh_id}
 		</if>
 	</update>
+
+	<resultMap id="select_sale_attr_map" type="com.hxf.mall.model.OBJECT_PRODUCT_SKU_INFO" autoMapping="true">
+		<id column="info_id" property="sku_id" />
+		<result column="info_ys" property="shp_ys"/>
+		<result column="info_bb" property="shp_bb"/>
+		<association property="color" javaType="com.hxf.mall.bean.T_MALL_PRODUCT_COLOR" autoMapping="true">
+			<id property="id" column="color_id"/>
+			<result property="shp_ys" column="ys"/>
+		</association>
+		<association property="version" javaType="com.hxf.mall.bean.T_MALL_PRODUCT_VERSION" autoMapping="true">
+			<id property="id" column="version_id"/>
+			<result property="shp_bb" column="bb"/>
+		</association>
+	</resultMap>
+
+	<select id="select_sale_attr_by_skuId" parameterType="int" resultMap="select_sale_attr_map">
+		SELECT info.sku_id AS info_id,info.shp_ys AS info_ys,info.shp_bb AS info_bb,info.*,color.id AS color_id,color.shp_ys AS ys,color.*,version.id AS version_id,version.shp_bb AS bb,version.*
+		FROM t_mall_product_sku_info info ,
+		t_mall_product_color color ,
+		t_mall_product_version version
+		WHERE
+		info.sku_id=#{sku_id} AND color.id=info.shp_ys AND version.id=info.shp_bb
+	</select>
 </mapper>

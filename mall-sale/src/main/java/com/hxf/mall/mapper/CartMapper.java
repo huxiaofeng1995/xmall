@@ -2,6 +2,7 @@ package com.hxf.mall.mapper;
 
 import com.hxf.mall.bean.T_MALL_SHOPPINGCAR;
 import com.hxf.mall.bean.T_MALL_USER_ACCOUNT;
+import com.hxf.mall.model.OBJECT_PRODUCT_SKU_INFO;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface CartMapper {
     void insert_cart(T_MALL_SHOPPINGCAR cart);
 
     void update_cart(T_MALL_SHOPPINGCAR cart);
+
+    OBJECT_PRODUCT_SKU_INFO select_sale_attr_by_skuId(Integer sku_id);
 }

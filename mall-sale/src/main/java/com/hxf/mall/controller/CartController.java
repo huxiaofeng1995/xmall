@@ -3,6 +3,7 @@ package com.hxf.mall.controller;
 import com.alibaba.fastjson.JSON;
 import com.hxf.mall.bean.T_MALL_SHOPPINGCAR;
 import com.hxf.mall.bean.T_MALL_USER_ACCOUNT;
+import com.hxf.mall.model.OBJECT_PRODUCT_SKU_INFO;
 import com.hxf.mall.service.CartService;
 import com.hxf.mall.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CartController {
@@ -133,5 +137,45 @@ public class CartController {
         }
         session.setAttribute("cartCount",list_cart.size());
         return Result.success();
+    }
+
+    @GetMapping("carts")
+    public Result getCartList(@CookieValue(value = "list_cart_cookie",required = false) String list_cart_cookie, HttpSession session){
+        List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+        T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
+        Map<String,Object> cartInfo = new HashMap<>();
+        List<OBJECT_PRODUCT_SKU_INFO> sale_attr_list = new ArrayList<>();
+
+        if(user == null){
+            //从cookie中获取
+            if(!StringUtils.isBlank(list_cart_cookie)){
+                try {
+                    list_cart_cookie = URLDecoder.decode(list_cart_cookie , "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                list_cart = JSON.parseArray(list_cart_cookie,T_MALL_SHOPPINGCAR.class);
+            }
+        }else {
+            list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");
+        }
+        for(T_MALL_SHOPPINGCAR cart : list_cart){
+            sale_attr_list.add(cartService.getSaleAttrBySkuId(cart.getSku_id()));
+        }
+        cartInfo.put("list_cart", list_cart);//购物车列表
+        cartInfo.put("sale_attr_list", sale_attr_list);//购物车内产品销售属性列表
+        cartInfo.put("sum", getMoney(list_cart));//购物车总金额
+        session.setAttribute("cartCount",list_cart.size());
+        return Result.success(cartInfo);
+    }
+
+    private BigDecimal getMoney(List<T_MALL_SHOPPINGCAR> list_cart) {
+        BigDecimal sum = new BigDecimal("0");
+        for(T_MALL_SHOPPINGCAR cart : list_cart){
+            if(cart.getShfxz().equals("1")) {//选中的才统计金额
+                sum = sum.add(new BigDecimal(cart.getHj() + ""));//添加前要先转换
+            }
+        }
+        return sum;
     }
 }

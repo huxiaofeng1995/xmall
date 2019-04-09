@@ -3,6 +3,7 @@ package com.hxf.mall.service.impl;
 import com.hxf.mall.bean.T_MALL_SHOPPINGCAR;
 import com.hxf.mall.bean.T_MALL_USER_ACCOUNT;
 import com.hxf.mall.mapper.CartMapper;
+import com.hxf.mall.model.OBJECT_PRODUCT_SKU_INFO;
 import com.hxf.mall.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,10 @@ public class CartServiceImpl implements CartService{
     @Override
     public void update_cart(T_MALL_SHOPPINGCAR cart) {
         cartMapper.update_cart(cart);
+    }
+
+    @Override
+    public OBJECT_PRODUCT_SKU_INFO getSaleAttrBySkuId(Integer sku_id) {
+        return cartMapper.select_sale_attr_by_skuId(sku_id);
     }
 }

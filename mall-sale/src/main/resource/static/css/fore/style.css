@@ -2295,3 +2295,46 @@ input{
 	outline: none;
 }
 
+
+/*购物车成功*/
+.lec{
+	float: left;
+	width: 62px;
+	height: 62px;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+.lec_name{
+	display: block;
+	margin-left: 20px;
+	margin-top: 20px;
+	font-size: 14px;
+}
+.lec_des{
+	display: block;
+	margin-left: 20px;
+	margin-top: 10px;
+	font-size: 12px;
+	color: #8c8c8c;
+}
+.shop_des{
+	width: 156px;
+	height: 35px;
+	margin-top: 53px;
+	margin-left: 810px;
+}
+.shop_cart{
+	width: 156px;
+	height: 35px;
+	background: red;
+	margin-top: -35px;
+	margin-left: 990px;
+}
+.cartSuccessDiv{
+	margin: 10px 20px;
+	background-color: #F3FDF6;
+	border: 1px solid #DEF3E6;
+	font-size: 16px;
+	color: #3C3C3C;
+	padding: 20px 130px;
+}
