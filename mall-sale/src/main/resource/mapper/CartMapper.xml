@@ -41,6 +41,10 @@
 		</if>
 	</update>
 
+	<delete id="delete_cart" parameterType="com.hxf.mall.bean.T_MALL_SHOPPINGCAR">
+		DELETE FROM t_mall_shoppingcar WHERE id=#{id}
+	</delete>
+
 	<resultMap id="select_sale_attr_map" type="com.hxf.mall.model.OBJECT_PRODUCT_SKU_INFO" autoMapping="true">
 		<id column="info_id" property="sku_id" />
 		<result column="info_ys" property="shp_ys"/>

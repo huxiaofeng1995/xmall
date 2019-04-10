@@ -49,4 +49,9 @@ public class CartServiceImpl implements CartService{
     public OBJECT_PRODUCT_SKU_INFO getSaleAttrBySkuId(Integer sku_id) {
         return cartMapper.select_sale_attr_by_skuId(sku_id);
     }
+
+    @Override
+    public void delete_cart(T_MALL_SHOPPINGCAR cart) {
+        cartMapper.delete_cart(cart);
+    }
 }

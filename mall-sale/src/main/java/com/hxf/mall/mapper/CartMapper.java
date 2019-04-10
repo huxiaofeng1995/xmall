@@ -18,4 +18,6 @@ public interface CartMapper {
     void update_cart(T_MALL_SHOPPINGCAR cart);
 
     OBJECT_PRODUCT_SKU_INFO select_sale_attr_by_skuId(Integer sku_id);
+
+    void delete_cart(T_MALL_SHOPPINGCAR cart);
 }

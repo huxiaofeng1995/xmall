@@ -166,6 +166,7 @@ public class CartController {
         cartInfo.put("sale_attr_list", sale_attr_list);//购物车内产品销售属性列表
         cartInfo.put("sum", getMoney(list_cart));//购物车总金额
         session.setAttribute("cartCount",list_cart.size());
+        cartInfo.put("cartSelectedCount",getSelectedCount(list_cart));
         return Result.success(cartInfo);
     }
 
@@ -177,5 +178,126 @@ public class CartController {
             }
         }
         return sum;
+    }
+
+    private int getSelectedCount(List<T_MALL_SHOPPINGCAR> list_cart){
+        int count = 0;
+        for(T_MALL_SHOPPINGCAR cart : list_cart){
+            if(cart.getShfxz().equals("1")) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    @PutMapping("cart")
+    public Result changeCart(@RequestBody T_MALL_SHOPPINGCAR cart, @CookieValue(value = "list_cart_cookie",required = false) String list_cart_cookie, HttpSession session, HttpServletResponse response){
+        List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+        T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
+        Map<String,Object> cartInfo = new HashMap<>();
+
+        if(user == null){
+            if(!StringUtils.isBlank(list_cart_cookie)){
+                try {
+                    list_cart_cookie = URLDecoder.decode(list_cart_cookie, "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                list_cart = JSON.parseArray(list_cart_cookie, T_MALL_SHOPPINGCAR.class);
+
+            }
+
+        }else {
+            list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");
+        }
+
+        for(T_MALL_SHOPPINGCAR c : list_cart){
+            //修改商品的选中状态，添加数量和合计价格
+            if(c.getSku_id() == cart.getSku_id()){
+                c.setShfxz(cart.getShfxz());
+                c.setTjshl(cart.getTjshl());
+                c.setHj(c.getTjshl() * c.getSku_jg());
+
+                if(user == null) {
+                    //更新cookie
+                    String json = "";
+                    try {
+                        json = URLEncoder.encode(JSON.toJSONString(list_cart),"utf-8");//解决cookie中文乱码的问题
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    Cookie cookie = new Cookie("list_cart_cookie", json);
+                    cookie.setPath("/");
+                    cookie.setMaxAge(60*60*24);
+                    response.addCookie(cookie);
+                }else {
+                    cartService.update_cart(c);
+                }
+            }
+        }
+        cartInfo.put("list_cart", list_cart);//购物车列表
+        cartInfo.put("sum", getMoney(list_cart));//购物车总金额
+        session.setAttribute("cartCount",list_cart.size());
+        cartInfo.put("cartSelectedCount",getSelectedCount(list_cart));
+        return Result.success(cartInfo);
+    }
+
+    @DeleteMapping("cart/{sku_id}")
+    public Result del_cart(@PathVariable Integer sku_id, @CookieValue(value = "list_cart_cookie",required = false) String list_cart_cookie, HttpSession session, HttpServletResponse response){
+        List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+        T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
+        Map<String,Object> cartInfo = new HashMap<>();
+        List<OBJECT_PRODUCT_SKU_INFO> sale_attr_list = new ArrayList<>();
+
+        if(user == null){
+            if(!StringUtils.isBlank(list_cart_cookie)){
+                try {
+                    list_cart_cookie = URLDecoder.decode(list_cart_cookie, "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                list_cart = JSON.parseArray(list_cart_cookie, T_MALL_SHOPPINGCAR.class);
+
+            }
+
+        }else {
+            list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");
+        }
+
+
+        int size = list_cart.size();
+//        for(T_MALL_SHOPPINGCAR c : list_cart){使用这种方法删除会报错ConcurrentModificationException
+        for(int i = size -1;i >= 0;i--){
+            //修改商品的选中状态，添加数量和合计价格
+            T_MALL_SHOPPINGCAR c = list_cart.get(i);
+            if(c.getSku_id() == sku_id){
+                list_cart.remove(i);
+
+                if(user == null) {
+                    //更新cookie
+                    String json = "";
+                    try {
+                        json = URLEncoder.encode(JSON.toJSONString(list_cart),"utf-8");//解决cookie中文乱码的问题
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    Cookie cookie = new Cookie("list_cart_cookie", json);
+                    cookie.setPath("/");
+                    cookie.setMaxAge(60*60*24);
+                    response.addCookie(cookie);
+                }else {
+                    cartService.delete_cart(c);
+                }
+            }
+        }
+        for(T_MALL_SHOPPINGCAR cart : list_cart){
+            sale_attr_list.add(cartService.getSaleAttrBySkuId(cart.getSku_id()));
+        }
+        cartInfo.put("list_cart", list_cart);//购物车列表
+        cartInfo.put("sale_attr_list", sale_attr_list);//购物车内产品销售属性列表
+        cartInfo.put("sum", getMoney(list_cart));//购物车总金额
+        session.setAttribute("cartCount",list_cart.size());
+        cartInfo.put("cartSelectedCount",getSelectedCount(list_cart));
+        return Result.success(cartInfo);
     }
 }

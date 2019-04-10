@@ -5,7 +5,8 @@
                 uri:'carts',
                 list_cart: null,
                 sale_attr_list : null,
-                sum: null
+                sum: null,
+                cartSelectedCount: null
             };
             //ViewModel
             var vue = new Vue({
@@ -22,13 +23,52 @@
                             vue.list_cart = result.data.list_cart;
                             vue.sale_attr_list = result.data.sale_attr_list;
                             vue.sum = result.data.sum;
+                            vue.cartSelectedCount = result.data.cartSelectedCount;
                         });
                     },
                     change_cart:function(cart){
-
+                        if(cart.shfxz=='1'){
+                            cart.shfxz='0'
+                        }else {
+                            cart.shfxz='1'
+                        }
+                        var url = 'cart';
+                        axios.put(url, cart).then(function(response){
+                            var result = response.data;
+                            vue.list_cart = result.data.list_cart;
+                            vue.sum = result.data.sum;
+                            vue.cartSelectedCount = result.data.cartSelectedCount;
+                        });
+                    },
+                    increCart:function(cart) {
+                        cart.shfxz = '1';
+                        cart.tjshl = cart.tjshl + 1;
+                        var url = 'cart';
+                        axios.put(url, cart).then(function(response){
+                            var result = response.data;
+                            vue.list_cart = result.data.list_cart;
+                            vue.sum = result.data.sum;
+                        });
+                    },
+                    decreCart:function(cart) {
+                        cart.shfxz = '1';
+                        if(cart.tjshl>1){
+                            cart.tjshl = cart.tjshl - 1;
+                        }else {
+                            cart.tjshl = 1;
+                        }
+                        var url = 'cart';
+                        axios.put(url, cart).then(function(response){
+                            var result = response.data;
+                            vue.list_cart = result.data.list_cart;
+                            vue.sum = result.data.sum;
+                        });
                     },
                     del_cart:function(id) {
-
+                        var url = 'cart/' + id;
+                        axios.delete(url).then(function(res) {
+                            location.reload()
+                        });
                     }
                 }
             });
@@ -56,7 +96,7 @@
                 <tbody>
                         <tr  class="cartProductItemTR" v-for="cart,index in list_cart">
                             <td>
-                                <input type="checkbox" v-model="cart.shfxz" @click="change_cart(cart)">
+                                <input type="checkbox" v-model="cart.shfxz==='1'" @click="change_cart(cart)">
                                 <img class="cartProductImg"  :src="cart.shp_tp">
                             </td>
                             <td>
@@ -86,9 +126,9 @@
                             <td>
 
                                 <div class="cartProductChangeNumberDiv">
-                                    <a  class="numberMinus" href="#nowhere">-</a>
+                                    <a  class="numberMinus" href="#nowhere" @click="decreCart(cart)">-</a>
                                     <input   class="orderItemNumberSetting" autocomplete="off" :value="cart.tjshl">
-                                    <a  class="numberPlus" href="#nowhere">+</a>
+                                    <a  class="numberPlus" href="#nowhere" @click="increCart(cart)">+</a>
                                 </div>
 
                              </td>
@@ -99,7 +139,7 @@
 
                             </td>
                             <td>
-                                <a class="deleteOrderItem"   href="#nowhere">删除</a>
+                                <a class="deleteOrderItem"   href="#nowhere" @click="del_cart(cart.sku_id)">删除</a>
                             </td>
                         </tr>
                 </tbody>
@@ -110,7 +150,7 @@
         <div class="cartFoot">
 
             <div class="pull-right">
-                <span>已选商品 <span class="cartSumNumber" >[[${session.cartCount}]]</span> 件</span>
+                <span>已选商品 <span class="cartSumNumber" >{{cartSelectedCount}}</span> 件</span>
 
                 <span>合计 (不含运费): </span>
                 <span class="cartSumPrice" >￥{{sum}}</span>

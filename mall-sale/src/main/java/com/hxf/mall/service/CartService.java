@@ -19,4 +19,6 @@ public interface CartService {
     void update_cart(T_MALL_SHOPPINGCAR cart_db);
 
     OBJECT_PRODUCT_SKU_INFO getSaleAttrBySkuId(Integer sku_id);
+
+    void delete_cart(T_MALL_SHOPPINGCAR cart);
 }
