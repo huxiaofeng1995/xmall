@@ -8,7 +8,9 @@ public enum ResultEnums {
     BUSSINESS_ERROR("2001", "业务逻辑错误"),
     VERIFY_CODE_ERROR("2002", "业务参数错误"),
     PARAM_ERROR("2002", "业务参数错误"),
-    AUTH_ERROR("1001","未登陆");
+    AUTH_ERROR("1001","未登陆"),
+    PERMISSION_DENY("1005","没有权限"),
+    LOGIN_ERROR("1006","用户名密码有误");
 
     private String code;
     private String msg;

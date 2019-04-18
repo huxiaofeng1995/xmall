@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxf.mall.mapper.UserMapper">
+    <select id="select_password_by_username" resultType="String">
+        SELECT yh_mm from t_mall_user_account WHERE yh_mch=#{yh_mch}
+    </select>
+</mapper>
