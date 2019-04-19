@@ -16,6 +16,11 @@ mybatis:
   typeAliasesPackage: com.hxf.mall.bean
   mapperLocations: classpath:mapper/*.xml
 
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: hxfmall #JWT加解密使用的密钥
+  expiration: 600000 #JWT的超期限时间（1小时）
+
 ---
 
 #开发配置
@@ -51,7 +56,4 @@ qiniu:
     host:
       name: http://poe12lctf.bkt.clouddn.com
 
-jwt:
-  tokenHeader: Authorization #JWT存储的请求头
-  secret: hxfmall #JWT加解密使用的密钥
-  expiration: 600000 #JWT的超期限时间（1小时）
+

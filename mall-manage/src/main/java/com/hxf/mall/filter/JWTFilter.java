@@ -1,6 +1,8 @@
 package com.hxf.mall.filter;
 
+import com.hxf.mall.bean.T_MALL_USER_ACCOUNT;
 import com.hxf.mall.shiro.JWTToken;
+import com.hxf.mall.util.JWTUtil;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
@@ -16,14 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-/**
- * Created with IntelliJ IDEA
- *
- * @Author yuanhaoyue swithaoy@gmail.com
- * @Description preHandle->isAccessAllowed->isLoginAttempt->executeLogin
- * @Date 2018-04-08
- * @Time 12:36
- */
+
 public class JWTFilter extends BasicHttpAuthenticationFilter {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -74,7 +69,16 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         String token = httpServletRequest.getHeader(tokenHeader);
         JWTToken jwtToken = new JWTToken(token);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
-        getSubject(request, response).login(jwtToken);
+        try {
+            getSubject(request, response).login(jwtToken);
+            //如果不抛异常，则将token解析出来的用户信息存到session中
+            String username = new JWTUtil().getUsername(token);
+            T_MALL_USER_ACCOUNT user = new T_MALL_USER_ACCOUNT();
+            user.setYh_mch(username);
+            ((HttpServletRequest) request).getSession().setAttribute("user", user);
+        }catch (Exception e){
+            throw e;
+        }
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
     }
@@ -105,7 +109,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
             //设置编码，否则中文字符在重定向时会变为空字符串
             message = URLEncoder.encode(message, "UTF-8");
-            httpServletResponse.sendRedirect("/unauthorized/" + message);
+            httpServletResponse.sendRedirect("/unauthentica/" + message);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }

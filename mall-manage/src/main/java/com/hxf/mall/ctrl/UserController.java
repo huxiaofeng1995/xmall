@@ -10,10 +10,7 @@ import com.hxf.mall.util.JWTUtil;
 import com.hxf.mall.util.ResponseDataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -33,7 +30,6 @@ public class UserController {
     @PostMapping("admin/login")
     private ResponseData login(@RequestBody String userInfo){
 
-        //省略数据库查询操作，待后期完善
         JSONObject object = JSON.parseObject(userInfo);
         String username = object.getString("username");
         String password = object.getString("password");
@@ -49,14 +45,12 @@ public class UserController {
 
     @GetMapping("admin/info")
     private ResponseData getUserInfo(HttpServletRequest request){
-        //获取请求token，验证该token用户是否登录
-        String token = request.getHeader("Authorization");
 
-        //省略数据库查询操作，待后期完善
-
-
+        T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) request.getSession().getAttribute("user");
         Map<String,Object> data = new HashMap<>();
-        data.put("username","胡晓峰");
+        data.put("username",user.getYh_mch());
+        //获取到用户名后，可以从数据库查询详细的用户信息，角色和权限等，后期再实现
+
         List<String>  roles = new ArrayList<>();
         roles.add("admin");
         data.put("roles",roles);
@@ -67,6 +61,11 @@ public class UserController {
     @GetMapping("/unauthorized")
     private ResponseData unauthorized(){
         return ResponseDataUtil.buildError(ResultEnums.PERMISSION_DENY);
+    }
+
+    @GetMapping("/unauthentica/{msg}")
+    private ResponseData unauthentica(@PathVariable String msg){
+        return ResponseDataUtil.buildError(msg);
     }
 
 }

@@ -10,6 +10,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -22,28 +23,36 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    private static String TOKENHEADER = "Authorization";
-
     /**
      * 先走 filter ，然后 filter 如果检测到请求头存在 token，则用 token 去 login，走 Realm 去验证
      */
     @Bean
-    public ShiroFilterFactoryBean factory(SecurityManager securityManager) {
+    public ShiroFilterFactoryBean factory(SecurityManager securityManager, JWTConfig jwtConfig) {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
 
         // 添加自己的过滤器并且取名为jwt
         Map<String, Filter> filterMap = new HashMap<>();
         //设置我们自定义的JWT过滤器
-        filterMap.put("jwt", new JWTFilter(TOKENHEADER));
+        filterMap.put("jwt", new JWTFilter(jwtConfig.getTokenHeader()));
         factoryBean.setFilters(filterMap);
         factoryBean.setSecurityManager(securityManager);
         // 设置无权限时跳转的 url;
         factoryBean.setUnauthorizedUrl("/unauthorized");
         Map<String, String> filterRuleMap = new HashMap<>();
+        // 访问 /unauthorized/** 不通过JWTFilter
+        filterRuleMap.put("/unauthorized/**", "anon");
+        filterRuleMap.put("/unauthentica/**", "anon");
         // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "jwt")
+    public JWTConfig jwtConfig(){
+        JWTConfig jwtConfig = new JWTConfig();
+        return jwtConfig;
     }
 
     /**
