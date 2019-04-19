@@ -9,6 +9,8 @@ import com.hxf.mall.to.ResponseData;
 import com.hxf.mall.util.QiniuUtil;
 import com.hxf.mall.util.ResponseDataUtil;
 import com.hxf.mall.util.UploadFactory;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +42,7 @@ public class CategoryController {
 
 
     @GetMapping("category/first")
+    //@RequiresRoles(logical = Logical.OR, value = {"user", "admin"})
     public ResponseData list_first_cate(){
         return ResponseDataUtil.buildSuccess(categoryService.getfl1List());
     }

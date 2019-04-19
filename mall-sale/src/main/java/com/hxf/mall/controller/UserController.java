@@ -33,22 +33,25 @@ public class UserController {
 
     @PostMapping(value="/login")
     public Result login(@RequestBody T_MALL_USER_ACCOUNT user, HttpSession session, HttpServletResponse response, @CookieValue(value = "list_cart_cookie",required = false,defaultValue = "") String list_cart_cookie){
-        //查询数据库登录
-        //省略了
-        user.setId(1);
-        session.setAttribute("user",user);
-        Cookie cookie = null;
-        try {
-            cookie = new Cookie("yh_nch", URLEncoder.encode(user.getYh_mch(),"utf-8"));//中文转码
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        cookie.setPath("/");//当类上加了requestMapping注解后，一定要setPath（"/"）
-        cookie.setMaxAge(60*60*24);//必须设置过期时间，否则秒过期
-        response.addCookie(cookie);
+        T_MALL_USER_ACCOUNT user_account = userService.getUserByUserName(user);
+        if(user_account != null && user.getYh_mm().equals(user_account.getYh_mm())) {
+            user.setId(1);
+            session.setAttribute("user", user);
+            Cookie cookie = null;
+            try {
+                cookie = new Cookie("yh_nch", URLEncoder.encode(user.getYh_mch(), "utf-8"));//中文转码
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            cookie.setPath("/");//当类上加了requestMapping注解后，一定要setPath（"/"）
+            cookie.setMaxAge(60 * 60 * 24);//必须设置过期时间，否则秒过期
+            response.addCookie(cookie);
 
-        combine_cart(user, response, session,list_cart_cookie);
-        return Result.success();
+            combine_cart(user, response, session, list_cart_cookie);
+            return Result.success();
+        }else {
+            return Result.fail("用户名密码有误");
+        }
     }
 
     private void combine_cart(T_MALL_USER_ACCOUNT user, HttpServletResponse response, HttpSession session, String list_cart_cookie) {
