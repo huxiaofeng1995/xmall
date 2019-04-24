@@ -1,7 +1,10 @@
 <div th:fragment="html">
     <script>
         $(function(){
+
             var data4Vue = {
+                user: {},
+                showlogin: false,
                 uri:'carts',
                 list_cart: null,
                 sale_attr_list : null,
@@ -69,6 +72,21 @@
                         axios.delete(url).then(function(res) {
                             location.reload()
                         });
+                    },
+                    checkorder:function(){
+                        var url = 'check-user-login';
+                        if(vue.cartSelectedCount == null || vue.cartSelectedCount == 0){
+                            alert("请选择商品")
+                            return;
+                        }
+                        axios.get(url).then(function(res) {
+                            if(res.data.code == 0){
+                                //用户已登录
+                                vue.showlogin = false;
+                            }else {
+                                vue.showlogin = true;
+                            }
+                        })
                     }
                 }
             });
@@ -154,7 +172,7 @@
 
                 <span>合计 (不含运费): </span>
                 <span class="cartSumPrice" >￥{{sum}}</span>
-                <button class="createOrderButton" disabled="disabled" >结  算</button>
+                <button class="createOrderButton" @click="checkorder">结  算</button>
             </div>
 
         </div>

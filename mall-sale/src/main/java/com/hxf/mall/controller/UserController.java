@@ -35,7 +35,6 @@ public class UserController {
     public Result login(@RequestBody T_MALL_USER_ACCOUNT user, HttpSession session, HttpServletResponse response, @CookieValue(value = "list_cart_cookie",required = false,defaultValue = "") String list_cart_cookie){
         T_MALL_USER_ACCOUNT user_account = userService.getUserByUserName(user);
         if(user_account != null && user.getYh_mm().equals(user_account.getYh_mm())) {
-            user.setId(1);
             session.setAttribute("user", user);
             Cookie cookie = null;
             try {
@@ -47,7 +46,7 @@ public class UserController {
             cookie.setMaxAge(60 * 60 * 24);//必须设置过期时间，否则秒过期
             response.addCookie(cookie);
 
-            combine_cart(user, response, session, list_cart_cookie);
+            combine_cart(user_account, response, session, list_cart_cookie);
             return Result.success();
         }else {
             return Result.fail("用户名密码有误");
@@ -101,6 +100,16 @@ public class UserController {
         }else {
             userService.registry(user);
             return Result.success();
+        }
+    }
+
+    @GetMapping("check-user-login")
+    public Result checkUserLogin(HttpSession session){
+        T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
+        if(user == null){
+            return Result.fail("用户未登录");
+        }else {
+            return Result.success(user);
         }
     }
 }
