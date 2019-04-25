@@ -2338,3 +2338,25 @@ input{
 	color: #3C3C3C;
 	padding: 20px 130px;
 }
+
+/*订单支付*/
+.message{height: 550px;width: 990px;border: 1px solid #f0f0f0;margin: 0 auto;padding:10px;color:#666 ;}
+.msg_title{color: #333333;font-weight: bold;}
+.msg_addr{width: 870px;height: 30px;margin: 10px auto 0;}
+.msg_left{display: inline-block;width: 140px;height: 26px;border: 2px solid #e4393c;text-align: center;color: #666666;}
+.msg_right{padding-left: 5px;display: inline-block;width: 600px;height: 26px;color: #666666;}
+.msg_line{width: 870px;height: 2px;background: #f0f0f0;margin: 10px auto;}
+.addrs{display: inline-block;margin-top: 20px;margin-left: 55px;}
+.msg_list{width: 870px;height: 260px;margin: 0 auto;}
+.msg_list_left{float: left;padding: 15px;width: 270px;height: 230px;background: #f7f7f7;}
+.left_title{width: 148px;height: 30px;line-height: 30px;text-align: center;border: 2px solid #e4393c;margin-top: 15px;margin-left: 20px;}
+.msg_list_right{float: left;width:570px ;height: 260px;background: #f3fbfe;}
+.msg_img{float: left;width: 80px;height: 80px;border: 1px solid #dddddd;margin-top: 50px;margin-left: 20px;}
+.msg_name{float: left;width: 230px;height: 70px;margin-left: 10px;margin-top: 50px;overflow: hidden;}
+.msg_price{float: left;width: 100px;height: 70px;margin-top: 50px;margin-left: 10px;}
+.msg_mon{float: left;width: 20px;height: 70px;margin-top: 50px;margin-left: 10px;}
+.msg_state{float: left;width: 50px;height: 70px;margin-top: 50px;margin-left: 10px;}
+.msg_sub{position: relative;width:870px;height: 120px;background: #f4f4f4;border-top: 1px solid #e6e6e6;margin: 0 auto;}
+.msg_sub_tit{position:absolute;top:20px;right: 20px;width: 190px;height: 20px;}
+.msg_sub_adds{position:absolute;top:50px;right: 20px;width:550px;height: 20px;color: #999999;}
+.msg_btn{position: absolute;top: 80px;right: 20px;width: 135px;height: 36px;background: #e54245;border: 0;border-radius: 5px;font-size: 18px;font-weight: bold;color: #FFFFFF;}

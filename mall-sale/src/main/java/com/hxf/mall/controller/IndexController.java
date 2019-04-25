@@ -1,6 +1,11 @@
 package com.hxf.mall.controller;
 
+import com.hxf.mall.bean.T_MALL_ADDRESS;
+import com.hxf.mall.bean.T_MALL_ORDER_INFO;
 import com.hxf.mall.bean.T_MALL_SHOPPINGCAR;
+import com.hxf.mall.bean.T_MALL_USER_ACCOUNT;
+import com.hxf.mall.model.OBJECT_T_MALL_FLOW;
+import com.hxf.mall.model.OBJECT_T_MALL_ORDER;
 import com.hxf.mall.service.AttrService;
 import com.hxf.mall.service.CartService;
 import com.hxf.mall.service.ListService;
@@ -10,7 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Controller
 public class IndexController {
@@ -67,5 +73,10 @@ public class IndexController {
 	@GetMapping("goto_cart")
 	public String goto_cart(){
 		return "cart";
+	}
+
+	@GetMapping("/goto_checkOrder")
+	public String goto_checkOrder(){
+		return "orderCheck";
 	}
 }

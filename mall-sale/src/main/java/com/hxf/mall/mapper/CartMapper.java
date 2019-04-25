@@ -5,6 +5,7 @@ import com.hxf.mall.bean.T_MALL_USER_ACCOUNT;
 import com.hxf.mall.model.OBJECT_PRODUCT_SKU_INFO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CartMapper {
     T_MALL_SHOPPINGCAR select_cart(Integer id);
@@ -20,4 +21,6 @@ public interface CartMapper {
     OBJECT_PRODUCT_SKU_INFO select_sale_attr_by_skuId(Integer sku_id);
 
     void delete_cart(T_MALL_SHOPPINGCAR cart);
+
+    void delete_carts(Map<Object, Object> map);
 }

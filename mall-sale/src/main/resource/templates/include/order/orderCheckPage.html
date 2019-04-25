@@ -1,0 +1,199 @@
+<div th:fragment="html">
+	<script>
+		$(function(){
+
+			var oid = getUrlParms("oid");
+	        var data4Vue = {
+	        		uri:'order-check',
+	        		order:{},
+	        		list_addr: [],
+	        		address: {},
+	        		selected_addr: {}
+	        };
+	        //ViewModel
+	        var vue = new Vue({
+	            el: '#workingArea',
+	            data: data4Vue,
+	            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+	            	this.load();
+
+	            },
+	            methods: {
+	            	load:function(){
+	                    var url =  this.uri;
+	                    axios.get(url).then(function(response) {
+	                        var result = response.data;
+	                    	vue.order = result.data.order;
+	                    	vue.list_addr = result.data.list_address;
+	                    	console.log(vue.list_addr)
+	                    });
+	            	},
+	            	submitOrder:function() {
+	            	    console.log(vue.selected_addr.id )
+                        if(vue.selected_addr.id == null){
+                            alert("请选择收货地址")
+                        }else {
+                            var url = "order"
+                            axios.post(url, vue.selected_addr).then(function(res){
+                                if(res.data.code == 0){
+                                    alert(123)
+                                }else {
+                                    alert(1234)
+                                }
+
+                            });
+                         }
+	            	},
+	            	addAddress:function() {
+	            	    $("#mymodal").modal("show");
+	            	},
+	            	saveAddress:function() {
+                        var url = "address";
+                        axios.post(url,vue.address).then(function(res) {
+                            vue.address = {}
+                            location.reload();
+                        })
+	            	},
+	            	chooseAddr:function(addr) {
+	            	    vue.selected_addr = addr;
+	            	}
+	            }
+	        });
+
+		})
+	</script>
+    <div class="buyPageDiv">
+		<div class="buyFlow">
+			<img class="pull-left" src="img/site/simpleLogo.png">
+			<img class="pull-right" src="img/site/buyflow.png">
+			<div style="clear:both"></div>
+		</div>
+		<div class="address">
+			<div class="addressTip">收货地址</div>
+			<div style="padding-left: 30px;border: 2px dotted dodgerblue">
+                <div v-for="addr in list_addr" >
+                    <input type="radio" name="id" @click="chooseAddr(addr)" style="display: inline-block"/>
+                    <div style="display: inline-block;height: 30px; line-height: 30px">
+                        {{addr.shjr}}(收) &nbsp;  &nbsp; &nbsp;     {{addr.yh_dz}} &nbsp; &nbsp;{{addr.lxfsh}}
+                    </div>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <div style="display: block">
+                <input type="button" value="添加收货地址" @click="addAddress">
+            </div>
+		</div>
+		<div style="clear: both"></div>
+		<div class="productList">
+			<div class="productListTip">确认订单信息</div>
+			<table class="productListTable">
+				<thead>
+					<tr>
+						<th colspan="2" >店铺宝贝</th>
+						<th>单价</th>
+						<th>数量</th>
+						<th>小计</th>
+						<th>配送方式</th>
+					</tr>
+					<tr class="rowborder">
+						<td  colspan="2" ></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody class="productListTableTbody" v-for="flow,findex in order.list_flow" :key="findex">
+                    <tr>
+                        <th colspan="2" class="productListTableFirstColumn">
+                            <img class="tmallbuy" src="img/site/tmallbuy.png">
+                            <a class="marketLink" href="#nowhere">仓库：{{flow.mqdd}}</a>
+                            <a class="wangwanglink" href="#nowhere"> <span class="wangwangGif"></span> </a>
+                        </th>
+                    </tr>
+                    <tr class="orderItemTR" v-for="oi,oindex in flow.list_info" :key="oi.index">
+                        <td class="orderItemFirstTD">
+                            <img class="orderItemImg"  :src="oi.shp_tp">
+                        </td>
+                        <td class="orderItemProductInfo">
+                            <a  :href="'goto_sku_detail?sku_id='+oi.sku_id" class="orderItemProductLink">
+                                {{oi.sku_mch}}
+                            </a>
+                            <img src="img/site/creditcard.png" title="支持信用卡支付">
+                            <img src="img/site/7day.png" title="消费者保障服务,承诺7天退货">
+                            <img src="img/site/promise.png" title="消费者保障服务,承诺如实描述">
+                        </td>
+                        <td>
+                            <span class="orderItemProductPrice">
+                                {{oi.sku_jg | formatMoneyFilter}}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="orderItemProductNumber">{{oi.sku_shl}}</span>
+                        </td>
+                        <td>
+                            <span class="orderItemUnitSum">
+                                {{oi.sku_jg*oi.sku_shl | formatMoneyFilter}}
+                            </span>
+                        </td>
+                        <td rowspan="5" class="orderItemLastTD" v-if="oindex==0">
+                            <label class="orderItemDeliveryLabel">
+                                <input type="radio" value="" checked="checked">
+                                普通配送
+                            </label>
+                            <select class="orderItemDeliverySelect">
+                                <option>快递 免邮费</option>
+                            </select>
+                        </td>
+                    </tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="orderItemTotalSumDiv">
+			<div class="pull-right">
+				<span>实付款：</span>
+				<span class="orderItemTotalSumSpan">{{order.zje|formatMoneyFilter}}</span>
+			</div>
+		</div>
+		<div class="submitOrderDiv">
+				<button type="submit" class="submitOrderButton" @click="submitOrder">提交订单</button>
+		</div>
+	</div>
+	<div class="modal" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">新添收货地址</h4>
+                </div>
+                <div class="modal-body" style="overflow:hidden;">
+                    <form action="add_address.do" id="addressForm">
+                        <div class="form-group" style="padding-top: 20px">
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control"  name="yh_dz" placeholder="请输入您的详细地址" v-model="address.yh_dz">
+                            </div>
+                            <br>
+                        </div>
+                        <div class="form-group" style="padding-top: 20px">
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control"  name="shjr" placeholder="请输入您的收货人姓名" v-model="address.shjr">
+                            </div>
+                            <br>
+                        </div>
+                        <div class="form-group" style="padding-top: 20px">
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control"  name="lxfsh" placeholder="请输入您的手机号码" v-model="address.lxfsh">
+                            </div>
+                            <br>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" @click="saveAddress">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -11,9 +11,9 @@ public class T_MALL_ORDER {
 	private Integer jdh;
 	private Integer yh_id;
 	private Date chjshj;
-	private Date yjsdshj;
-	private Integer dzh_id;
-	private String dzh_mch;
+	private Date yjsdshj;//预计送达时间
+	private Integer dzh_id;//地址id
+	private String dzh_mch;//地址名称
 
 	public Integer getId() {
 		return id;

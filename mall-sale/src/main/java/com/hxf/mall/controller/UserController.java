@@ -1,6 +1,7 @@
 package com.hxf.mall.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.hxf.mall.bean.T_MALL_ADDRESS;
 import com.hxf.mall.bean.T_MALL_SHOPPINGCAR;
 import com.hxf.mall.bean.T_MALL_USER_ACCOUNT;
 import com.hxf.mall.service.CartService;
@@ -35,7 +36,7 @@ public class UserController {
     public Result login(@RequestBody T_MALL_USER_ACCOUNT user, HttpSession session, HttpServletResponse response, @CookieValue(value = "list_cart_cookie",required = false,defaultValue = "") String list_cart_cookie){
         T_MALL_USER_ACCOUNT user_account = userService.getUserByUserName(user);
         if(user_account != null && user.getYh_mm().equals(user_account.getYh_mm())) {
-            session.setAttribute("user", user);
+            session.setAttribute("user", user_account);
             Cookie cookie = null;
             try {
                 cookie = new Cookie("yh_nch", URLEncoder.encode(user.getYh_mch(), "utf-8"));//中文转码
@@ -111,5 +112,13 @@ public class UserController {
         }else {
             return Result.success(user);
         }
+    }
+
+    @PostMapping("address")
+    public Result addAddreess(@RequestBody T_MALL_ADDRESS address,HttpSession session){
+        T_MALL_USER_ACCOUNT user_account = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
+        address.setYh_id(user_account.getId());
+        userService.add_address(address);
+        return Result.success("success");
     }
 }

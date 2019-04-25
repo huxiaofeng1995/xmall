@@ -83,10 +83,35 @@
                             if(res.data.code == 0){
                                 //用户已登录
                                 vue.showlogin = false;
+                                location.href = 'goto_checkOrder'
                             }else {
                                 vue.showlogin = true;
                             }
                         })
+                    },
+                    userLogin:function() {
+                        var url =  'login';
+                        if(0==this.user.yh_mch.length){
+                            $("span.errorMessage").html("请输入用户名");
+                            $("div.loginErrorMessageDiv").css("visibility","visible");
+                            return;
+                        }
+                        if(0==this.user.yh_mm.length){
+                            $("span.errorMessage").html("请输入密码");
+                            $("div.loginErrorMessageDiv").css("visibility","visible");
+                            return;
+                        }
+
+                        axios.post(url,this.user).then(function(response) {
+                            var result = response.data;
+                            if(result.code==0){
+                                location.href="goto_cart";
+                            }
+                            else{
+                                $("span.errorMessage").html(result.message);
+                                $("div.loginErrorMessageDiv").css("visibility","visible");
+                            }
+                        });
                     }
                 }
             });

@@ -11,4 +11,13 @@
     <insert id="insert_user" parameterType="T_MALL_USER_ACCOUNT">
         INSERT INTO t_mall_user_account (yh_mch,yh_mm) VALUES (#{yh_mch},#{yh_mm})
     </insert>
+
+    <select id="select_address" parameterType="T_MALL_USER_ACCOUNT" resultType="T_MALL_ADDRESS">
+        SELECT * FROM t_mall_address WHERE yh_id=#{id}
+    </select>
+
+    <insert id="insert_address" parameterType="T_MALL_ADDRESS">
+        INSERT INTO t_mall_address(yh_dz,yh_id,shjr,lxfsh)
+        VALUES (#{yh_dz},#{yh_id},#{shjr},#{lxfsh})
+    </insert>
 </mapper>

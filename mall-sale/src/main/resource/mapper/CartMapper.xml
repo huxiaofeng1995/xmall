@@ -67,4 +67,12 @@
 		WHERE
 		info.sku_id=#{sku_id} AND color.id=info.shp_ys AND version.id=info.shp_bb
 	</select>
+
+	<delete id="delete_carts" parameterType="Map">
+		DELETE FROM t_mall_shoppingcar WHERE id in
+		<foreach collection="list_id" item="id" separator="," open="("
+				 close=")">
+			#{id}
+		</foreach>
+	</delete>
 </mapper>
