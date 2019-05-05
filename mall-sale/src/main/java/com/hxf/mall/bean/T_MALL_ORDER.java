@@ -8,7 +8,7 @@ public class T_MALL_ORDER {
 	private Integer id;
 	private String shhr;
 	private BigDecimal zje;
-	private Integer jdh;
+	private Integer jdh;//订单进度 1：已提交 2：已支付 3:运输中 4：已签收 5:完成
 	private Integer yh_id;
 	private Date chjshj;
 	private Date yjsdshj;//预计送达时间

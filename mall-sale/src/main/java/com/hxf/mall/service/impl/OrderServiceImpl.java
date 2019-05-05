@@ -1,12 +1,15 @@
 package com.hxf.mall.service.impl;
 
 import com.hxf.mall.bean.T_MALL_ADDRESS;
+import com.hxf.mall.bean.T_MALL_ORDER;
 import com.hxf.mall.bean.T_MALL_ORDER_INFO;
+import com.hxf.mall.exception.OverSaleException;
 import com.hxf.mall.mapper.CartMapper;
 import com.hxf.mall.mapper.OrderMapper;
 import com.hxf.mall.model.OBJECT_T_MALL_FLOW;
 import com.hxf.mall.model.OBJECT_T_MALL_ORDER;
 import com.hxf.mall.service.OrderService;
+import com.hxf.mall.util.MyDateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +59,49 @@ public class OrderServiceImpl implements OrderService{
         Map<Object, Object> map = new HashMap<Object, Object>();
         map.put("list_id", list_id);
         cartMapper.delete_carts(map);
+    }
+
+    @Override
+    public T_MALL_ORDER select_order(Integer id) {
+        return orderMapper.select_order(id);
+    }
+
+    @Override
+    public void pay(OBJECT_T_MALL_ORDER order) throws OverSaleException {
+        //修改订单状态 ---已支付
+        order.setJdh(2);
+        orderMapper.update_order(order);
+        //修改物流信息
+        List<OBJECT_T_MALL_FLOW> list_flow = order.getList_flow();
+        for(OBJECT_T_MALL_FLOW flow : list_flow){
+            // 修改物流的业务
+            flow.setPsmsh("商品正在出库");
+            flow.setPsshj(MyDateUtil.getMyDate(1));//当前时间一天后开始配送
+            flow.setYwy("小红雨");
+            flow.setLxfsh("1324824");
+            orderMapper.update_flow(flow);
+
+            List<T_MALL_ORDER_INFO> list_info = flow.getList_info();
+            //修改sku信息，销量和库存等
+            for(T_MALL_ORDER_INFO info : list_info){
+                //查询库存（加锁）
+                //并发量大的时候，加锁会影响效率，这里加个阀门，到kc到达警戒线时才去加锁
+                long kc = 0;
+                int count = orderMapper.select_count_kc(info.getSku_id());//查询该sku库存是否大于10
+                Map<Object, Object> map = new HashMap<Object, Object>();
+                map.put("count", count);
+                map.put("sku_id", info.getSku_id());
+                kc = orderMapper.select_kc(map);
+                if (kc >= info.getSku_shl()) {
+                    orderMapper.update_kc(info);
+                } else {
+                    throw new OverSaleException("库存不足");
+                }
+            }
+        }
+
+        //修改订单状态 ---出库
+        order.setYjsdshj(MyDateUtil.getMyDate(3));//当前时间三天后预计送达
+        orderMapper.update_order(order);
     }
 }

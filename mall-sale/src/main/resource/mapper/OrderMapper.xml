@@ -78,4 +78,8 @@
 		select count(1) from t_mall_sku where id = #{sku_id} and kc>10
 	</select>
 
+	<select id="select_order" parameterType="int">
+		SELECT * FROM t_mall_order WHERE id=#{id}
+	</select>
+
 </mapper>

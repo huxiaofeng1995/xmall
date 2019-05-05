@@ -4,6 +4,7 @@ import com.hxf.mall.bean.T_MALL_ADDRESS;
 import com.hxf.mall.bean.T_MALL_ORDER_INFO;
 import com.hxf.mall.bean.T_MALL_SHOPPINGCAR;
 import com.hxf.mall.bean.T_MALL_USER_ACCOUNT;
+import com.hxf.mall.exception.OverSaleException;
 import com.hxf.mall.model.OBJECT_T_MALL_FLOW;
 import com.hxf.mall.model.OBJECT_T_MALL_ORDER;
 import com.hxf.mall.service.CartService;
@@ -118,6 +119,11 @@ public class OrderController {
             e.printStackTrace();
             return Result.fail("fail");
         }
-        return Result.success("success");
+        return Result.success(order.getId());//将订单id传回给前端
+    }
+
+    @GetMapping("order/{id}")
+    public Result getOrder(@PathVariable Integer id){
+        return Result.success(orderService.select_order(id));
     }
 }

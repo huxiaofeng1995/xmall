@@ -36,9 +36,10 @@
                             var url = "order"
                             axios.post(url, vue.selected_addr).then(function(res){
                                 if(res.data.code == 0){
-                                    alert(123)
+                                    var oid = res.data.data;
+                                    location.href = "goto_pay?zje=" + vue.order.zje + "&oid=" + oid;
                                 }else {
-                                    alert(1234)
+                                    alert("服务出错");
                                 }
 
                             });
